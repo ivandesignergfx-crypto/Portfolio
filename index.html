@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iván Gómez — Diseñador Gráfico</title>
+<meta name="description" content="Portfolio de Iván Gómez, diseñador gráfico especializado en branding, cartelería deportiva y contenido visual. Sevilla, España.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  /* ============================================================
+     DESIGN TOKENS
+     Ink        #121316  — fondo principal, casi-negro neutro
+     Bone       #F2EFE6  — texto principal sobre fondo oscuro
+     Blue       #0250BB  — color dominante de marca (EXACTO pedido)
+     Blue Deep  #01285C  — variante oscura para fondos/degradados
+     Blue Light #4C8EE8  — variante clara para detalles/hover
+     Gold       #C7A24B  — acento secundario, uso mínimo
+     Mist       #9B9A8E  — texto secundario
+     ============================================================ */
+  :root{
+    --ink:#121316;
+    --ink-2:#191B20;
+    --ink-3:#1E2027;
+    --bone:#F2EFE6;
+    --blue:#0250BB;
+    --blue-deep:#01285C;
+    --blue-light:#4C8EE8;
+    --gold:#C7A24B;
+    --mist:#9B9A8E;
+    --line: rgba(242,239,230,0.12);
+    --display: 'Bebas Neue', sans-serif;
+    --body: 'Inter', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{ background:var(--ink); color:var(--bone); font-family:var(--body); overflow-x:hidden; -webkit-font-smoothing:antialiased; }
+  ::selection{ background:var(--blue); color:var(--bone); }
+  a{ color:inherit; text-decoration:none; }
+  :focus-visible{ outline: 2px solid var(--blue-light); outline-offset: 3px; }
+  img{ max-width:100%; display:block; }
+
+  .wrap{ max-width:1200px; margin:0 auto; padding:0 clamp(20px, 5vw, 64px); }
+
+  .eyebrow{
+    font-family:var(--mono); font-size:12px; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--blue-light); display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{ content:""; width:24px; height:1px; background:var(--blue-light); display:inline-block; }
+
+  /* ============================== NAV ============================== */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(18,19,22,0.85); backdrop-filter: blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{ display:flex; align-items:center; justify-content:space-between; height:76px; gap:20px; }
+  .logo{ font-family:var(--display); font-size:22px; letter-spacing:0.04em; white-space:nowrap; }
+  .logo span{ color:var(--blue-light); }
+  .nav-links{ display:flex; gap:34px; font-size:14px; font-weight:500; }
+  .nav-links a{ color:var(--mist); transition:color .25s ease; }
+  .nav-links a:hover{ color:var(--bone); }
+  .nav-right{ display:flex; align-items:center; gap:16px; }
+
+  .lang-toggle{ font-family:var(--mono); font-size:12px; letter-spacing:0.05em; display:flex; border:1px solid var(--line); border-radius:2px; overflow:hidden; }
+  .lang-toggle button{ background:transparent; border:none; color:var(--mist); padding:8px 12px; cursor:pointer; font-family:var(--mono); font-size:12px; transition:all .2s ease; }
+  .lang-toggle button.active{ background:var(--blue); color:var(--bone); }
+
+  .nav-cta{
+    font-family:var(--mono); font-size:12px; letter-spacing:0.06em; border:1px solid var(--line);
+    padding:9px 18px; border-radius:2px; color:var(--bone); transition:all .25s ease; white-space:nowrap;
+  }
+  .nav-cta:hover{ border-color:var(--blue-light); background:var(--blue); color:var(--bone); }
+
+  @media(max-width:900px){ .nav-links{ display:none; } }
+
+  /* ============================== HERO ============================== */
+  .hero{ min-height:100svh; display:flex; flex-direction:column; justify-content:center; position:relative; padding-top:130px; padding-bottom:48px; }
+
+  .hero-bg{
+    position:absolute; inset:0; z-index:0;
+    background:
+      repeating-linear-gradient(180deg, transparent 0 46px, rgba(242,239,230,0.025) 46px 47px),
+      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(2,80,187,0.5), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 105% 10%, rgba(76,142,232,0.16), transparent 60%);
+    mask-image: linear-gradient(180deg, black 60%, transparent 100%);
+  }
+  .hero-inner{ position:relative; z-index:1; }
+
+  .hero-handle{
+    font-family:var(--mono); font-size:13px; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--mist); margin-bottom:26px; display:flex; align-items:center; gap:10px;
+  }
+  .hero-handle b{ color:var(--blue-light); font-weight:500; }
+  .hero-handle::before{ content:""; width:24px; height:1px; background:var(--blue-light); display:inline-block; }
+
+  .hero-title{
+    font-family:var(--display); font-weight:400; line-height:0.88;
+    font-size:clamp(58px, 11vw, 156px); letter-spacing:0.005em; text-transform:uppercase;
+  }
+  .hero-title .accent{ color:transparent; -webkit-text-stroke:1.5px var(--bone); }
+
+  .hero-role{ margin-top:26px; font-size:clamp(16px, 2vw, 22px); color:var(--mist); max-width:640px; line-height:1.5; font-weight:400; }
+  .hero-role strong{ color:var(--bone); font-weight:600; }
+
+  .hero-stats{
+    margin-top:40px; display:grid; grid-template-columns:repeat(4,auto); gap:clamp(24px,5vw,64px);
+    padding-top:22px; border-top:1px solid var(--line);
+  }
+  .hero-stats div{ display:flex; flex-direction:column; gap:6px; }
+  .stat-num{ font-family:var(--display); font-size:clamp(28px,3.5vw,42px); color:var(--bone); line-height:1; }
+  .stat-label{ font-family:var(--mono); font-size:11px; color:var(--mist); letter-spacing:0.05em; text-transform:uppercase; }
+  @media(max-width:700px){ .hero-stats{ grid-template-columns:repeat(2,auto); } }
+
+  /* ============================== TICKER ============================== */
+  .ticker-section{ border-top:1px solid var(--line); border-bottom:1px solid var(--line); background:var(--ink-2); padding:18px 0; overflow:hidden; position:relative; }
+  .ticker-track{ display:flex; width:max-content; animation: ticker 32s linear infinite; }
+  .ticker-track span{ font-family:var(--mono); font-size:14px; letter-spacing:0.1em; text-transform:uppercase; color:var(--mist); padding:0 28px; display:flex; align-items:center; gap:28px; white-space:nowrap; }
+  .ticker-track span::after{ content:"●"; color:var(--blue-light); font-size:8px; }
+  @keyframes ticker{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce){ .ticker-track{ animation:none; } }
+
+  /* ============================== DIVIDER ============================== */
+  .kickoff-divider{ display:flex; align-items:center; justify-content:center; padding:32px 0; }
+  .kickoff-divider svg{ opacity:0.55; }
+
+  /* ============================== SECTION SHELL ============================== */
+  section{ padding:88px 0; position:relative; }
+  .section-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:40px; margin-bottom:44px; flex-wrap:wrap; }
+  .section-title{ font-family:var(--display); font-size:clamp(38px, 5vw, 58px); line-height:0.95; text-transform:uppercase; margin-top:14px; max-width:600px; }
+  .section-note{ max-width:340px; color:var(--mist); font-size:15px; line-height:1.6; }
+  @media(max-width:760px){ section{ padding:60px 0; } }
+
+  /* ============================== ABOUT ============================== */
+  .about-grid{ display:grid; grid-template-columns: 0.9fr 1.1fr; gap:64px; align-items:start; }
+  .about-portrait{ aspect-ratio: 4/5; border-radius:2px; background: linear-gradient(160deg, var(--blue-deep) 0%, var(--ink-2) 70%); position:relative; overflow:hidden; border:1px solid var(--line); }
+ 
+  .about-portrait::before{ content:attr(data-i18n-ph); position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; font-family:var(--mono); font-size:11px; letter-spacing:0.1em; color:rgba(242,239,230,0.35); padding:20px; }
+   .about-portrait img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:center top;
+  display:block;
+                        }
+  .about-text p{ font-size:17px; line-height:1.7; color:var(--mist); margin-bottom:16px; max-width:560px; }
+  .about-text strong{ color:var(--bone); font-weight:600; }
+
+  .skill-list{ margin-top:28px; display:grid; grid-template-columns:repeat(2,1fr); gap:12px 32px; }
+  .skill-list div{ display:flex; align-items:baseline; gap:12px; font-size:14px; color:var(--bone); padding-bottom:12px; border-bottom:1px solid var(--line); }
+  .skill-list div span{ font-family:var(--mono); font-size:11px; color:var(--blue-light); }
+
+  .socials-row{ margin-top:44px; display:flex; gap:28px; flex-wrap:wrap; }
+  .socials-row a{ font-family:var(--mono); font-size:13px; letter-spacing:0.05em; color:var(--mist); border-bottom:1px solid transparent; padding-bottom:3px; transition:all .2s ease; }
+  .socials-row a:hover{ color:var(--blue-light); border-color:var(--blue-light); }
+
+  /* ============================== WHO I WORK WITH ============================== */
+  .collab-strip{ background:var(--ink-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+  .collab-grid{ display:grid; grid-template-columns:repeat(4,1fr); }
+  .collab-cell{ padding:44px 28px; border-right:1px solid var(--line); text-align:center; display:flex; flex-direction:column; align-items:center; gap:14px; }
+  .collab-cell:last-child{ border-right:none; }
+  .collab-icon{ width:34px; height:34px; color:var(--blue-light); }
+  .collab-icon svg{ width:100%; height:100%; }
+  .collab-name{ font-family:var(--display); font-size:19px; letter-spacing:0.02em; text-transform:uppercase; }
+  @media(max-width:900px){
+    .collab-grid{ grid-template-columns:repeat(2,1fr); }
+    .collab-cell:nth-child(2){ border-right:none; }
+    .collab-cell{ border-bottom:1px solid var(--line); }
+  }
+
+  /* ============================== FEATURED CASE ============================== */
+  .feature-case{ display:grid; grid-template-columns:1.1fr 0.9fr; gap:0; border:1px solid var(--line); }
+  .feature-visual{ aspect-ratio:1/1; position:relative; overflow:hidden; background: linear-gradient(135deg, var(--blue-deep) 0%, var(--ink-3) 100%); }
+  .feature-visual::before{ content:attr(data-i18n-ph); position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; font-family:var(--mono); font-size:11px; letter-spacing:0.1em; color:rgba(242,239,230,0.35); padding:24px; }
+  .feature-copy{ padding:40px; display:flex; flex-direction:column; justify-content:center; border-left:1px solid var(--line); }
+  .feature-cat{ font-family:var(--mono); font-size:11px; letter-spacing:0.1em; color:var(--blue-light); text-transform:uppercase; margin-bottom:14px; }
+  .feature-title{ font-family:var(--display); font-size:clamp(32px,4vw,48px); text-transform:uppercase; line-height:1; margin-bottom:20px; }
+  .feature-desc{ color:var(--mist); font-size:15.5px; line-height:1.7; margin-bottom:28px; max-width:440px; }
+  .feature-link{ font-family:var(--mono); font-size:13px; color:var(--bone); border-bottom:1px solid var(--blue-light); padding-bottom:3px; width:fit-content; }
+  @media(max-width:900px){
+    .feature-case{ grid-template-columns:1fr; }
+    .feature-copy{ border-left:none; border-top:1px solid var(--line); padding:28px; }
+  }
+
+  /* ============================== WORK GRID ============================== */
+  .work-filter{ display:flex; gap:10px; flex-wrap:wrap; }
+  .filter-btn{ font-family:var(--mono); font-size:12px; letter-spacing:0.05em; padding:8px 16px; border:1px solid var(--line); border-radius:2px; color:var(--mist); cursor:pointer; background:transparent; transition:all .2s ease; }
+  .filter-btn.active, .filter-btn:hover{ color:var(--bone); background:var(--blue); border-color:var(--blue); }
+
+  .work-grid{ display:grid; grid-template-columns:repeat(2, 1fr); gap:2px; background:var(--line); border:1px solid var(--line); }
+  .work-card{ background:var(--ink); position:relative; overflow:hidden; aspect-ratio: 4/3; cursor:pointer; }
+  .work-card:nth-child(5n+1){ grid-column:span 2; aspect-ratio:16/9; }
+
+  .work-thumb{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background: var(--thumb-bg, linear-gradient(135deg, var(--blue-deep), var(--ink-2))); transition:transform .6s cubic-bezier(.2,.7,.2,1); }
+  .work-card:hover .work-thumb{ transform:scale(1.04); }
+  .work-thumb-label{ font-family:var(--mono); font-size:11px; letter-spacing:0.1em; color:rgba(242,239,230,0.4); text-align:center; padding:20px; }
+
+  .work-overlay{ position:absolute; inset:0; background:linear-gradient(0deg, rgba(18,19,22,0.92) 0%, rgba(18,19,22,0.1) 55%, transparent 70%); display:flex; flex-direction:column; justify-content:flex-end; padding:26px; }
+  .work-cat{ font-family:var(--mono); font-size:11px; letter-spacing:0.08em; color:var(--blue-light); text-transform:uppercase; margin-bottom:8px; }
+  .work-name{ font-family:var(--display); font-size:26px; letter-spacing:0.01em; text-transform:uppercase; line-height:1.05; }
+  .work-arrow{ position:absolute; top:22px; right:22px; width:36px; height:36px; border:1px solid rgba(242,239,230,0.3); border-radius:50%; display:flex; align-items:center; justify-content:center; opacity:0; transform:translate(-6px,6px); transition:all .3s ease; }
+  .work-card:hover .work-arrow{ opacity:1; transform:translate(0,0); background:var(--blue); border-color:var(--blue); }
+  .work-arrow svg{ width:14px; height:14px; }
+
+  @media(max-width:760px){ .work-grid{ grid-template-columns:1fr; } .work-card:nth-child(5n+1){ grid-column:span 1; } }
+
+  .work-note{ margin-top:28px; font-family:var(--mono); font-size:12px; color:var(--mist); border-left:2px solid var(--blue-light); padding-left:14px; }
+  .work-more{ margin-top:36px; display:flex; justify-content:center; }
+  .work-more a{ font-family:var(--mono); font-size:13px; letter-spacing:0.05em; padding:14px 28px; border:1px solid var(--line); border-radius:2px; transition:all .2s ease; }
+  .work-more a:hover{ border-color:var(--blue-light); color:var(--blue-light); }
+
+  /* ============================== PROCESS ============================== */
+  .process-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); }
+  .process-cell{ background:var(--ink); padding:36px 28px; display:flex; flex-direction:column; gap:18px; min-height:220px; }
+  .process-num{ font-family:var(--display); font-size:44px; color:var(--blue-light); line-height:1; }
+  .process-name{ font-family:var(--display); font-size:20px; text-transform:uppercase; letter-spacing:0.02em; }
+  .process-desc{ font-size:13.5px; color:var(--mist); line-height:1.6; }
+  @media(max-width:900px){ .process-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media(max-width:560px){ .process-grid{ grid-template-columns:1fr; } }
+
+  /* ============================== SERVICES ============================== */
+  .services-list{ border-top:1px solid var(--line); }
+  .service-row{ display:grid; grid-template-columns: 60px 1fr 1.3fr 100px; gap:24px; align-items:center; padding:32px 0; border-bottom:1px solid var(--line); transition:background .25s ease; }
+  .service-row:hover{ background:rgba(242,239,230,0.02); }
+  .service-num{ font-family:var(--mono); color:var(--blue-light); font-size:14px; }
+  .service-name{ font-family:var(--display); font-size:clamp(22px,3vw,32px); text-transform:uppercase; letter-spacing:0.01em; }
+  .service-desc{ color:var(--mist); font-size:14.5px; line-height:1.6; max-width:420px; }
+  .service-tag{ font-family:var(--mono); font-size:11px; color:var(--mist); text-align:right; }
+  @media(max-width:760px){ .service-row{ grid-template-columns:1fr; gap:8px; } .service-tag{ text-align:left; } }
+
+  /* ============================== REVIEWS ============================== */
+  .reviews-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); }
+  .review-card{ background:var(--ink); padding:36px 32px; display:flex; flex-direction:column; gap:20px; }
+  .review-quote-mark{ font-family:var(--display); font-size:52px; line-height:1; color:var(--blue-light); opacity:0.85; }
+  .review-text{ font-size:15.5px; line-height:1.7; color:var(--bone); flex-grow:1; }
+  .review-foot{ display:flex; flex-direction:column; gap:2px; padding-top:16px; border-top:1px solid var(--line); }
+  .review-name{ font-family:var(--display); font-size:19px; letter-spacing:0.02em; text-transform:uppercase; }
+  .review-role{ font-family:var(--mono); font-size:11.5px; color:var(--mist); }
+  @media(max-width:900px){ .reviews-grid{ grid-template-columns:1fr 1fr; } }
+  @media(max-width:640px){ .reviews-grid{ grid-template-columns:1fr; } }
+
+  /* ============================== CONTACT ============================== */
+  .contact-section{ background:linear-gradient(160deg, var(--blue-deep) 0%, #0A1220 100%); border-top:1px solid var(--line); }
+  .contact-title{ font-family:var(--display); font-size:clamp(46px, 9vw, 120px); line-height:0.92; text-transform:uppercase; max-width:900px; }
+  .contact-title a{ border-bottom:2px solid var(--blue-light); }
+  .contact-sub{ margin-top:28px; color:rgba(242,239,230,0.75); font-size:17px; max-width:520px; line-height:1.6; }
+
+  .contact-cta{
+    margin-top:40px; display:inline-flex; align-items:center; gap:12px;
+    background:var(--bone); color:var(--ink); font-family:var(--mono); font-size:14px; letter-spacing:0.04em;
+    padding:17px 30px; border-radius:2px; transition:all .25s ease;
+  }
+  .contact-cta:hover{ background:var(--blue-light); color:var(--ink); }
+
+  .contact-row{ margin-top:56px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:24px; font-family:var(--mono); font-size:13px; }
+  .contact-row a{ color:var(--bone); border-bottom:1px solid rgba(242,239,230,0.3); padding-bottom:2px; }
+  .contact-row a:hover{ border-color:var(--blue-light); color:var(--blue-light); }
+
+  footer{ padding:28px 0; display:flex; justify-content:space-between; font-family:var(--mono); font-size:11px; color:rgba(242,239,230,0.4); flex-wrap:wrap; gap:10px; }
+
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  @media(max-width:760px){ .about-grid{ grid-template-columns:1fr; } .service-row{ padding:24px 0; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <div class="logo">IVÁN GÓMEZ</div>
+    <nav class="nav-links">
+      <a href="#sobre-mi" data-i18n="nav_about">Sobre mí</a>
+      <a href="#trabajo" data-i18n="nav_work">Trabajo</a> 
+      <a href="#servicios" data-i18n="nav_services">Servicios</a>
+    </nav>
+    <div class="nav-right">
+      <div class="lang-toggle">
+        <button id="btnES" class="active">ES</button>
+        <button id="btnEN">EN</button>
+      </div>
+      <!-- ⚠️ SUSTITUIR el href por el enlace real de tu formulario de contacto -->
+      <a href="https://ivandesignergfx-crypto.github.io/Formulario-proyecto/" target="_blank" rel="noopener" class="nav-cta js-form-link" data-i18n="nav_contact">Contactar →</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============================== HERO ============================== -->
+<section class="hero" id="inicio">
+  <div class="hero-bg"></div>
+  <div class="wrap hero-inner">
+    <div class="hero-handle" data-i18n-html="hero_handle">@ivangomezz.creative — Sevilla</div>
+    <h1 class="hero-title" data-i18n-html="hero_title">Diseño con<br>la <span class="accent">precisión</span><br>de un buen<br>saque inicial.</h1>
+    <p class="hero-role" data-i18n-html="hero_role">Especializado en <strong>branding</strong>, <strong>identidad</strong> y <strong>comunicación visual</strong> — piezas claras, emocionales y pensadas para ganar.</p>
+
+    <div class="hero-stats">
+      <div><span class="stat-num">+5</span><span class="stat-label" data-i18n="stat_disciplines">Disciplinas de diseño</span></div>
+      <div><span class="stat-num">+6</span><span class="stat-label" data-i18n="stat_projects">Proyectos publicados</span></div>
+      <div><span class="stat-num">100%</span><span class="stat-label" data-i18n="stat_custom">Diseño a medida</span></div>
+      <div><span class="stat-num">ES</span><span class="stat-label" data-i18n="stat_remote">Local y remoto</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== TICKER ============================== -->
+<div class="ticker-section">
+  <div class="ticker-track" id="tickerTrack"></div>
+</div>
+
+<!-- ============================== ABOUT ============================== -->
+<section id="sobre-mi">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow" data-i18n="about_eyebrow">Sobre mí</div>
+        <h2 class="section-title" data-i18n-html="about_title">El diseño<br>como estrategia</h2>
+      </div>
+      <p class="section-note" data-i18n="about_note">De la cartelería deportiva a la identidad de marca: cada proyecto empieza con un objetivo claro, no con un filtro bonito.</p>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-portrait reveal">
+        <img src="img/mio.jpg" alt="">
+      </div>
+      <div class="about-text reveal">
+        <p data-i18n-html="about_p1">Soy <strong>Iván Gómez</strong>, diseñador gráfico afincado en Sevilla. Trabajo la identidad visual y la cartelería deportiva como dos caras de lo mismo: transmitir un mensaje claro y emocional que conecte con quien lo mira.</p>
+        <p data-i18n="about_p2">He colaborado con peñas deportivas, artistas y pequeños negocios, aportando soluciones visuales — de logotipos a piezas para redes sociales — que refuerzan su presencia y su imagen de marca.</p>
+        <p data-i18n="about_p3">Actualmente busco sumarme a un equipo creativo, agencia o departamento de comunicación donde seguir creciendo y aportar valor desde el primer día.</p>
+
+        <div class="skill-list">
+          <div><span>01</span><span data-i18n="skill1">Logotipo</span></div>
+          <div><span>02</span><span data-i18n="skill2">Identidad completa</span></div>
+          <div><span>03</span><span data-i18n="skill3">Diseño web</span></div>
+          <div><span>04</span><span data-i18n="skill4">Redes sociales</span></div>
+          <div><span>05</span><span data-i18n="skill5">Papelería/Packaging</span></div>
+          <div><span>06</span><span data-i18n="skill6">Cartelería/Flyers</span></div>
+        </div>
+
+        <div class="socials-row">
+          <a href="https://www.behance.net/iveffects" target="_blank" rel="noopener">Behance ↗</a>
+          <a href="https://www.linkedin.com/in/iván-gómez-sojo-488307358" target="_blank" rel="noopener">LinkedIn ↗</a>
+          <a href="http://instagram.com/iveffects" target="_blank" rel="noopener">Instagram ↗</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== WHO I WORK WITH ============================== -->
+<div class="collab-strip">
+  <div class="wrap">
+    <div class="collab-grid reveal">
+      <div class="collab-cell">
+        <div class="collab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 4h16l-8 9v6"/><path d="M8 20h8"/><path d="M4 4c2.5 3 5.2 4.6 8 4.6S17.5 7 20 4"/></svg></div>
+        <div class="collab-name" data-i18n="collab1">Ocio nocturno</div>
+      </div>
+      <div class="collab-cell">
+        <div class="collab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M12 21s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/></svg></div>
+        <div class="collab-name" data-i18n="collab2">Marcas locales</div>
+      </div>
+      <div class="collab-cell">
+        <div class="collab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="9" cy="8" r="3"/><circle cx="16.5" cy="9.5" r="2.3"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6"/><path d="M14.5 14.3c2.6.4 4.5 2.5 4.5 5.7"/></svg></div>
+        <div class="collab-name" data-i18n="collab3">Peñas</div>
+      </div>
+      <div class="collab-cell">
+        <div class="collab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 12h18"/></svg></div>
+        <div class="collab-name" data-i18n="collab4">Agencias</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="kickoff-divider reveal">
+  <svg width="120" height="24" viewBox="0 0 120 24" fill="none">
+    <line x1="0" y1="12" x2="42" y2="12" stroke="#4C8EE8" stroke-width="1"/>
+    <circle cx="60" cy="12" r="10" stroke="#4C8EE8" stroke-width="1"/>
+    <line x1="78" y1="12" x2="120" y2="12" stroke="#4C8EE8" stroke-width="1"/>
+  </svg>
+</div>
+
+<!-- ============================== FEATURED CASE ============================== -->
+<section id="destacado" style="padding-top:0;">
+  <div class="wrap">
+    <div class="eyebrow reveal" data-i18n="feat_eyebrow" style="margin-bottom:24px;">Proyecto destacado</div>
+    <div class="feature-case reveal">
+      <div class="feature-visual"> <img src="img/esta.jpeg" alt=""> </div>
+      <div class="feature-copy">
+        
+        <div class="feature-cat" data-i18n="feat_cat">Branding · Identidad visual</div>
+        <div class="feature-title" data-i18n="feat_name">Nombre del proyecto</div>
+        <p class="feature-desc" data-i18n="feat_desc"> Algunas de las mejores fotos del evento realizado en Sevilla</p>
+        <a class="feature-link" id="featureLink" href="https://www.instagram.com/p/DY2HU9IjMHK/?img_index=1" target="_blank" rel="noopener" data-i18n="feat_link">Ver proyecto completo ↗</a>
+      </div>
+    </div>
+    
+  </div>
+</section>
+
+<!-- ============================== WORK ============================== -->
+<section id="trabajo">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow" data-i18n="work_eyebrow">Trabajo seleccionado</div>
+        <h2 class="section-title" data-i18n-html="work_title">Proyectos<br>destacados</h2>
+      </div>
+      <div class="work-filter">
+        <button class="filter-btn active" data-filter="all" data-i18n="filter_all">Todo</button>
+        <button class="filter-btn" data-filter="deportivo" data-i18n="filter_sport">Deportivo</button>
+        <button class="filter-btn" data-filter="branding" data-i18n="filter_branding">Branding</button>
+        <button class="filter-btn" data-filter="social" data-i18n="filter_social">Social &amp; Vídeo</button>
+      </div>
+    </div>
+
+    <div class="work-grid reveal" id="workGrid"></div>
+
+    <div class="work-more reveal">
+      <a href="https://www.behance.net/iveffects" target="_blank" rel="noopener" data-i18n="work_more">Ver todo el proyecto en Behance ↗</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================== PROCESS ============================== -->
+<section id="proceso">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow" data-i18n="process_eyebrow">Metodología</div>
+        <h2 class="section-title" data-i18n-html="process_title">Cómo<br>trabajo</h2>
+      </div>
+      <p class="section-note" data-i18n="process_note">Un proceso claro, transparente y colaborativo para garantizar que cada proyecto avance con una dirección definida y un resultado a la altura de tu marca.</p>
+    </div>
+
+    <div class="process-grid reveal">
+      <div class="process-cell"><div class="process-num">01</div><div class="process-name" data-i18n="p1_name">Brief</div><div class="process-desc" data-i18n="p1_desc">Come</div></div>
+      <div class="process-cell"><div class="process-num">02</div><div class="process-name" data-i18n="p2_name">Concepto</div><div class="process-desc" data-i18n="p2_desc">Moodboard y bocetos para fijar dirección visual antes de producir.</div></div>
+      <div class="process-cell"><div class="process-num">03</div><div class="process-name" data-i18n="p3_name">Diseño</div><div class="process-desc" data-i18n="p3_desc">Producción y revisiones guiadas por el criterio definido, no por el gusto de cada día.</div></div>
+      <div class="process-cell"><div class="process-num">04</div><div class="process-name" data-i18n="p4_name">Entrega</div><div class="process-desc" data-i18n="p4_desc">Archivos finales adaptados a cada formato y canal de uso.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== SERVICES ============================== -->
+<section id="servicios">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow" data-i18n="serv_eyebrow">Qué hago</div>
+        <h2 class="section-title" data-i18n="serv_title">Servicios</h2>
+      </div>
+      <p class="section-note" data-i18n="serv_note">Cinco disciplinas, un mismo criterio: que la pieza comunique antes de que se lea.</p>
+    </div>
+
+    <div class="services-list reveal">
+      <div class="service-row"><div class="service-num">01</div><div class="service-name" data-i18n="s1_name">Logotipo</div><div class="service-desc" data-i18n="s1_desc">Logotipos e identidad visual completa: del concepto al manual de marca.</div><div class="service-tag" data-i18n="s1_tag">Identidad</div></div>
+      <div class="service-row"><div class="service-num">02</div><div class="service-name" data-i18n="s2_name">Identidad completa</div><div class="service-desc" data-i18n="s2_desc">Piezas para clubes, peñas y eventos deportivos con impacto visual inmediato.</div><div class="service-tag" data-i18n="s2_tag">Branding</div></div>
+      <div class="service-row"><div class="service-num">03</div><div class="service-name" data-i18n="s3_name">Diseño web</div><div class="service-desc" data-i18n="s3_desc">Maquetación y composición visual para publicaciones y materiales impresos.</div><div class="service-tag" data-i18n="s3_tag">Digital</div></div>
+      <div class="service-row"><div class="service-num">04</div><div class="service-name" data-i18n="s4_name">Redes sociales</div><div class="service-desc" data-i18n="s4_desc">Montaje y postproducción en Premiere Pro para contenido audiovisual de marca.</div><div class="service-tag" data-i18n="s4_tag">Social media</div></div>
+      <div class="service-row"><div class="service-num">05</div><div class="service-name" data-i18n="s5_name">Papelería/Packaging</div><div class="service-desc" data-i18n="s5_desc">Contenido y calendario visual pensado para la coherencia de marca en redes.</div><div class="service-tag" data-i18n="s5_tag">Print</div></div>
+      <div class="service-row"><div class="service-num">06</div><div class="service-name" data-i18n="s6_name">Cartelería/Flyers</div><div class="service-desc" data-i18n="s6_desc">Contenido y calendario visual pensado para la coherencia de marca en redes.</div><div class="service-tag" data-i18n="s6_tag">Social media</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== REVIEWS ============================== -->
+<section id="resenas">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow" data-i18n="rev_eyebrow">Reseñas</div>
+        <h2 class="section-title" data-i18n-html="rev_title">Lo que dicen<br>de mi trabajo</h2>
+      </div>
+      <p class="section-note" data-i18n="rev_note">Opiniones reales de clientes y colaboradores sobre los proyectos entregados.</p>
+    </div>
+
+    <!--
+      ⚠️ SUSTITUYE cada tarjeta por una reseña real: texto, nombre y cargo/marca.
+      Las reseñas no se traducen automáticamente (se muestran igual en ES/EN) —
+      si quieres versión en inglés, duplica el bloque y edítalo dentro de cada
+      atributo data-lang más abajo, o traduce tú el texto directamente.
+      Añade o elimina tarjetas .review-card según cuántas reseñas tengas.
+    -->
+    <div class="reviews-grid reveal">
+      <div class="review-card">
+        <div class="review-quote-mark">“</div>
+        <p class="review-text1">El logo que me diseñó representa perfectamente mi marca. Escuchó mis ideas y lo transformó visualmente increíble.</p>
+        <div class="review-foot">
+          <div class="review-name">Antonio</div>
+          <div class="review-role">Fontanería</div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-quote-mark">“</div>
+        <p class="review-text2">Cuidó cada detalle para reflejar nuestra esencia natural y artesanal. Un trabajo coherente, limpio y fiel a la identidad de Naturvellum.</p>
+        <div class="review-foot">
+          <div class="review-name">Naturvellum</div>
+          <div class="review-role">Empresa de papel</div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-quote-mark">“</div>
+        <p class="review-text3">Profesional, creativo y con una atención al detalle que marca la diferencia.</p>
+        <div class="review-foot">
+          <div class="review-name">Moon Café y Copas</div>
+          <div class="review-role">Ocio nocturno</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== CONTACT ============================== -->
+<section class="contact-section" id="contacto">
+  <div class="wrap">
+    <div class="eyebrow reveal" style="color:var(--blue-light)" data-i18n="contact_eyebrow">Disponible para proyectos freelance</div>
+    <h2 class="contact-title reveal" data-i18n="contact_title">Hablemos de tu próximo proyecto</h2>
+    <p class="contact-sub reveal" data-i18n="contact_sub">Abierto a oportunidades profesionales, en local o en remoto, dentro de equipos creativos, agencias o departamentos de comunicación y diseño.</p>
+
+    <!-- ⚠️ SUSTITUIR el href por el enlace real de tu formulario de contacto -->
+    <a href="https://tu-formulario-de-contacto.com" target="_blank" rel="noopener" class="contact-cta reveal js-form-link" data-i18n="contact_cta">Rellenar formulario de contacto →</a>
+
+    <div class="contact-row reveal">
+      <a href="mailto:tucorreo@ejemplo.com">ivandesigner.gfx@gmail.com</a>
+      <a href="https://www.instagram.com/ivangomezz.creative/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.tiktok.com/@ivangomezz.creative?lang=es" target="_blank" rel="noopener">Tik Tok</a>
+      <a href="https://www.linkedin.com/in/iván-gómez-sojo-488307358" target="_blank" rel="noopener">LinkedIn</a>
+    
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;">
+    <span>© 2026 Iván Gómez</span>
+    <span data-i18n="footer_made">Diseñado en Sevilla</span>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   PROYECTOS
+   ⚠️ No pude leer el contenido real de tu Behance (es una web
+   que carga los proyectos con JavaScript), así que estos 9
+   proyectos son PLACEHOLDERS genéricos organizados por categoría.
+   Sustituye: name, img (ruta de tu imagen), behance (link real)
+   y slug (debe coincidir con un caso en proyecto.html)
+   ============================================================ */
+const PROYECTOS = [
+  { name:"Proyecto 01", cat:"branding", slug:"proyecto-01", img:"img/moon.png", behance:"https://www.behance.net/gallery/202302745/Moon-Branding" },
+  { name:"Proyecto 02", cat:"branding", slug:"proyecto-02", img:"img/naturvellum.png", behance:"https://www.behance.net/gallery/202336427/Naturvellum-Branding" },
+  { name:"Proyecto 03", cat:"social",  slug:"proyecto-03", img:"img/peña.png", behance:"https://www.behance.net/gallery/214173515/RRSS" },
+  { name:"Proyecto 04", cat:"deportivo", slug:"proyecto-04", img:"img/ciclismo_01.jpg", behance:"https://www.behance.net/gallery/226886473/Cycling-Visual-Concept" },
+  { name:"Proyecto 05", cat:"logotipo",  slug:"proyecto-05", img:"img/av/portada.png" },
+  { name:"Proyecto 06", cat:"social",    slug:"proyecto-06", img:"img/moon_09.jpg" },
+];
+
+/* ============================================================
+   I18N — diccionario ES / EN
+   ============================================================ */
+const I18N = {
+  es:{
+    nav_work:"Trabajo", nav_about:"Sobre mí", nav_services:"Servicios", nav_contact:"Contactar →",
+    hero_handle:"@ivangomezz.creative — Sevilla",
+    hero_title:"Diseño con<br>la <span class=\"accent\">precisión</span><br>de un buen<br>saque inicial.",
+    hero_role:"Especializado en <strong>branding</strong>, <strong>cartelería deportiva</strong> y <strong>comunicación visual</strong> — piezas claras, emocionales y pensadas para ganar.",
+    stat_disciplines:"Disciplinas de diseño", stat_projects:"Proyectos publicados", stat_custom:"Diseño a medida", stat_remote:"Local y remoto",
+    about_eyebrow:"Sobre mí", about_title:"El diseño<br>como estrategia",
+    about_note:"Cada proyecto empieza con un objetivo claro, no con un filtro bonito.",
+    about_photo_ph:"SUSTITUIR POR FOTO",
+    about_p1:"Soy <strong>Iván</strong>, diseñador gráfico en Sevilla. Trabajo la identidad visual y la cartelería deportiva como dos caras de lo mismo: transmitir un mensaje claro y emocional que conecte con quien lo mira.",
+    about_p2:"He colaborado con peñas deportivas, artistas y pequeños negocios, aportando soluciones visuales — de logotipos a piezas para redes sociales — que refuerzan su presencia y su imagen de marca.",
+    about_p3:"Actualmente, estoy abierto a nuevas oportunidades, tanto en proyectos freelance como dentro de equipos creativos o agencias. Si crees que podríamos trabajar juntos, estaré encantado de escucharte!",
+    skill1:"Logotipo", skill2:"Identidad completa", skill3:"Diseño web",
+    skill4:"Redes sociales", skill5:"Papelería/Packaging", skill6:"Cartelería/Flyers",
+    collab1:"Ocio nocturno", collab2:"Marcas locales", collab3:"Peñas", collab4:"Agencias",
+    feat_eyebrow:"Proyecto destacado", feat_cat:"Fotografía", feat_name:"The champions burguer",
+    feat_desc:"Algunas de las mejores fotos del evento realizado en Sevilla.",
+    
+    
+    work_eyebrow:"Trabajo seleccionado", work_title:"Proyectos<br>destacados",
+    filter_all:"Todo", filter_sport:"Deportivo", filter_branding:"Branding", filter_social:"Social media",
+    work_more:"Ver todo el proyecto en Behance ↗",
+    
+    process_eyebrow:"Metodología", process_title:"Cómo<br>trabajo",
+    process_note:"Un proceso claro, transparente y colaborativo para garantizar que cada proyecto avance con una dirección definida y un resultado a la altura de tu marca.",
+    p1_name:"Brief", p1_desc:"Empezamos con una reunión para entender tu negocio, objetivos, público y personalidad de marca. Definimos la estrategia antes de diseñar.",
+    p2_name:"Concepto", p2_desc:"Creamos moodboards, referencias y primeros bocetos para establecer un concepto sólido que sirva como base del proyecto.",
+    p3_name:"Diseño", p3_desc:"Transformamos la estrategia en un diseño funcional y atractivo. Refinamos cada detalle mediante revisiones hasta alcanzar el resultado esperado.",
+    p4_name:"Entrega", p4_desc:"Recibes los archivos finales optimizados para cada formato, junto con las versiones y recursos necesarios para empezar a utilizarlos.",
+    serv_eyebrow:"Qué hago", serv_title:"Servicios", serv_note:"Seis disciplinas, un mismo criterio: que la pieza comunique antes de que se lea.",
+    s1_name:"Logotipo", s1_desc:"Diseño de logotipos únicos y memorables que transmiten la personalidad de tu marca desde el primer vistazo.", s1_tag:"Identidad",
+    s2_name:"Identidad completa", s2_desc:"Sistema visual completo: logotipo, colores, tipografía, aplicaciones y manual de marca para crear una identidad coherente.", s2_tag:"Branding",
+    s3_name:"Diseño web", s3_desc:"Diseño de páginas web modernas, rápidas y enfocadas en convertir visitantes en clientes, siempre adaptadas a cualquier dispositivo.", s3_tag:"Web",
+    s4_name:"Redes sociales", s4_desc:"Diseño de contenido visual para Instagram, TikTok y otras plataformas, manteniendo una imagen de marca consistente y profesional.", s4_tag:"Social",
+    s5_name:"Papelería/Packaging", s5_desc:"Diseño de tarjetas, papelería corporativa, etiquetas y packaging que refuerzan el valor de tu marca en cada detalle.", s5_tag:"Packaging",
+    s6_name:"Cartelería/Flyers", s6_desc:"Diseño de carteles, flyers y piezas promocionales con un enfoque visual potente para eventos, campañas y comunicación de marca.", s6_tag:"Impreso",
+    
+    rev_eyebrow:"Reseñas", rev_title:"Lo que dicen<br>de mi trabajo",
+    rev_note:"Opiniones reales de clientes y colaboradores sobre los proyectos entregados.",
+    contact_eyebrow:"Disponible para proyectos freelance",
+    contact_title:"Hablemos de tu próximo proyecto",
+    contact_cta:"Rellenar formulario de contacto →",
+    contact_sub:"Abierto a oportunidades profesionales, en local o en remoto, dentro de equipos creativos, agencias o departamentos de comunicación y diseño.",
+    footer_made:"Diseñado en Sevilla",
+    cat_deportivo:"Deportivo", cat_branding:"Branding", cat_social:"Social & Vídeo", cat_logotipo: "Logotipo"
+  },
+  en:{
+    nav_work:"Work", nav_about:"About", nav_services:"Services", nav_contact:"Get in touch →",
+    hero_handle:"@ivangomezz.creative — Seville",
+    hero_title:"Design with<br>the <span class=\"accent\">precision</span><br>of a good<br>kickoff.",
+    hero_role:"Specialized in <strong>branding</strong>, <strong>sports poster design</strong> and <strong>visual communication</strong> — clear, emotional pieces built to win.",
+    stat_disciplines:"Design disciplines", stat_projects:"Published projects", stat_custom:"Custom-made design", stat_remote:"On-site and remote",
+    about_eyebrow:"About me", about_title:"Design<br>as strategy",
+    about_note:"From sports posters to brand identity: every project starts with a clear goal, not a nice filter.",
+    about_photo_ph:"REPLACE WITH PHOTO",
+    about_p1:"I'm <strong>Iván Gómez</strong>, a graphic designer based in Seville. I treat visual identity and sports poster design as two sides of the same coin: a clear, emotional message that connects with whoever sees it.",
+    about_p2:"I've worked with sports clubs, artists and small businesses, delivering visual solutions — from logos to social media pieces — that strengthen their presence and brand image.",
+    about_p3:"I'm currently looking to join a creative team, agency or communications department where I can keep growing and add value from day one.",
+    skill1:"Logotipo", skill2:"Identidad completa", skill3:"Diseño web",
+    skill4:"Redes sociales", skill5:"Papelería/Packaging", skill6:"Cartelería/Flyers",
+    collab1:"Nightlife", collab2:"Local brands", collab3:"Fan groups", collab4:"Agencies",
+    feat_eyebrow:"Featured project", feat_cat:"Branding · Visual identity", feat_name:"Project name",
+    feat_desc:"Space for your flagship project: the one that best sums up your design approach and the result achieved for the client.",
+    feat_link:"View full project ↗", feat_visual_ph:"REPLACE WITH PROJECT IMAGE",
+    feat_note:"Replace this block with your own flagship project — image, name, category and description.",
+    work_eyebrow:"Selected work", work_title:"Featured<br>projects",
+    filter_all:"All", filter_sport:"Sports", filter_branding:"Branding", filter_social:"Social & Video",
+    work_more:"See the full project on Behance ↗",
+    work_note:"Each card opens a detail page in a new tab (proyecto.html). Replace name, image and content with your real project — see the code comments.",
+    process_eyebrow:"Methodology", process_title:"How<br>I work",
+    process_note:"A clear process that gives clients peace of mind and consistent results on every delivery.",
+    p1_name:"Brief", p1_desc:"I listen to the goal, the audience and the references before opening the software.",
+    p2_name:"Concept", p2_desc:"Moodboard and sketches to set the visual direction before production.",
+    p3_name:"Design", p3_desc:"Production and revisions guided by the defined criteria, not the mood of the day.",
+    p4_name:"Delivery", p4_desc:"Final files adapted to every format and channel of use.",
+    serv_eyebrow:"What I do", serv_title:"Services", serv_note:"Six disciplines, one same standard: the piece should communicate before it's read.",
+    s1_name:"Logo Design", s1_desc:"Unique, memorable logo design that captures your brand's personality at first glance.", s1_tag:"Identity",
+    s2_name:"Full Brand Identity", s2_desc:"Complete visual system: logo, colors, typography, applications and brand manual for a coherent identity.", s2_tag:"Branding",
+    s3_name:"Web Design", s3_desc:"Modern, fast websites focused on turning visitors into clients, fully responsive on any device.", s3_tag:"Web",
+    s4_name:"Social Media", s4_desc:"Visual content design for Instagram, TikTok and other platforms, keeping a consistent, professional brand image.", s4_tag:"Social",
+    s5_name:"Stationery & Packaging", s5_desc:"Business cards, corporate stationery, labels and packaging that reinforce your brand's value in every detail.", s5_tag:"Packaging",
+    s6_name:"Posters & Flyers", s6_desc:"Poster, flyer and promotional design with strong visual impact for events, campaigns and brand communication.", s6_tag:"Print",
+    rev_eyebrow:"Reviews", rev_title:"What people<br>are saying",
+    rev_note:"Real feedback from clients and collaborators on delivered projects.",
+    contact_eyebrow:"Available for freelance projects",
+    contact_title:"Let's talk about your next project",
+    contact_cta:"Fill out the contact form →",
+    contact_sub:"Open to professional opportunities, on-site or remote, within creative teams, agencies or design and communications departments.",
+    footer_made:"Designed in Seville",
+    cat_deportivo:"Sports", cat_branding:"Branding", cat_social:"Social & Video"
+  }
+};
+
+let currentLang = "es";
+const grid = document.getElementById('workGrid');
+
+function applyLang(lang){
+  currentLang = lang;
+  document.documentElement.lang = lang;
+  const dict = I18N[lang];
+
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.getAttribute('data-i18n');
+    if(dict[key] !== undefined) el.textContent = dict[key];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el=>{
+    const key = el.getAttribute('data-i18n-html');
+    if(dict[key] !== undefined) el.innerHTML = dict[key];
+  });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{
+    const key = el.getAttribute('data-i18n-ph');
+    if(dict[key] !== undefined) el.setAttribute('data-i18n-ph', dict[key]);
+  });
+
+  document.getElementById('btnES').classList.toggle('active', lang==='es');
+  document.getElementById('btnEN').classList.toggle('active', lang==='en');
+
+  const featureLink = document.getElementById('featureLink');
+if(featureLink.getAttribute('href').includes('proyecto.html')){
+  const url = new URL(featureLink.href, window.location.href);
+  url.searchParams.set('lang', lang);
+  featureLink.href = url.pathname + url.search;
+}
+
+  renderWork(document.querySelector('.filter-btn.active')?.dataset.filter || 'all');
+  renderTicker();
+}
+
+document.getElementById('btnES').addEventListener('click', ()=>applyLang('es'));
+document.getElementById('btnEN').addEventListener('click', ()=>applyLang('en'));
+
+function renderWork(filter){
+  const dict = I18N[currentLang];
+  const catLabel = { deportivo:dict.cat_deportivo, branding:dict.cat_branding, social:dict.cat_social };
+  grid.innerHTML = "";
+  PROYECTOS
+    .filter(p => filter === "all" || p.cat === filter)
+    .forEach(p => {
+      const card = document.createElement('a');
+      card.className = "work-card";
+      card.href = `proyecto.html?id=${p.slug}&lang=${currentLang}`;
+      card.target = "_blank";
+      card.rel = "noopener";
+      const placeholderText = currentLang === 'es' ? '— añade tu imagen —' : '— add your image —';
+      card.innerHTML = `
+        <div class="work-thumb" style="${p.img ? `background-image:url('${p.img}');background-size:cover;background-position:center;` : ''}">
+          ${p.img ? '' : `<div class="work-thumb-label">${p.name}<br>${placeholderText}</div>`}
+        </div>
+        <div class="work-arrow">
+          <svg viewBox="0 0 14 14" fill="none"><path d="M2 12L12 2M12 2H4M12 2V10" stroke="#F2EFE6" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="work-overlay">
+          <div class="work-cat">${catLabel[p.cat]}</div>
+          <div class="work-name">${p.name}</div>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+}
+
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    renderWork(btn.dataset.filter);
+  });
+});
+
+/* ticker content */
+const track = document.getElementById('tickerTrack');
+function renderTicker(){
+  const words = currentLang === 'es'
+    ? ["Logotipo","Identidad visual","Comunicación","Redes Sociales","Fotografía"]
+    : ["Branding","Sports Poster Design","Video Editing","Visual Identity","Social Media","Photography"];
+  track.innerHTML = "";
+  for(let i=0;i<2;i++){
+    words.forEach(w=>{
+      const s = document.createElement('span');
+      s.textContent = w;
+      track.appendChild(s);
+    });
+  }
+}
+
+/* scroll reveal */
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+  });
+},{ threshold:0.15 });
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* init */
+applyLang('es');
+</script>
+
+</body>
+</html>
