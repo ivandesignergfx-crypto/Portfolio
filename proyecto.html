@@ -132,31 +132,35 @@
 
   footer{ padding:28px 0; font-family:var(--mono); font-size:11px; color:rgba(242,239,230,0.4); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; }
 
-  /* Márgenes en hero en móvil */
+  /* Móvil: márgenes y flyers verticales */
   @media(max-width:640px){
-    .hero-content {
-      padding-left: 20px;
-      padding-right: 20px;
-    }
-  }
+    .wrap { padding-left: 20px !important; padding-right: 20px !important; }
 
-  /* Flyers en vertical con scroll en móvil */
-  @media(max-width:640px){
     .flyer-grid {
-      flex-direction: column;
-      overflow-x: hidden;
-      overflow-y: auto;
-      scroll-snap-type: y mandatory;
-      gap: 16px;
-      padding: 16px;
-      background: transparent;
+      flex-direction: column !important;
+      overflow-x: hidden !important;
+      overflow-y: visible !important;
+      scroll-snap-type: none !important;
+      gap: 20px !important;
+      padding: 20px !important;
+      background: transparent !important;
+      border: none !important;
     }
     .flyer-grid-item {
-      width: 100%;
-      height: auto;
-      aspect-ratio: 9/16;
-      scroll-snap-align: start;
-      border-radius: 4px;
+      width: 100% !important;
+      height: auto !important;
+      min-height: unset !important;
+      aspect-ratio: 9/16 !important;
+      scroll-snap-align: unset !important;
+      border-radius: 6px !important;
+      flex: none !important;
+    }
+    .flyer-grid-item video {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      display: block !important;
+      border-radius: 6px !important;
     }
   }
 
