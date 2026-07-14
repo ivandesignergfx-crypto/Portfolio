@@ -135,7 +135,40 @@
   /* Móvil: márgenes y flyers verticales */
   @media(max-width:640px){
     .wrap { padding-left: 20px !important; padding-right: 20px !important; }
+    .content { padding-left: 20px !important; padding-right: 20px !important; }
 
+    /* cover-slider: los 4 primeros flyers (2 imagen + 2 video) en vertical */
+    .cover-slider {
+      flex-direction: column !important;
+      overflow-x: hidden !important;
+      overflow-y: visible !important;
+      scroll-snap-type: none !important;
+      gap: 20px !important;
+      padding: 20px !important;
+      background: transparent !important;
+      border: none !important;
+      justify-content: flex-start !important;
+    }
+    .cover-slide {
+      width: 100% !important;
+      height: auto !important;
+      min-height: unset !important;
+      aspect-ratio: 9/16 !important;
+      scroll-snap-align: unset !important;
+      border-radius: 6px !important;
+      flex: none !important;
+      background-size: cover !important;
+      background-position: center !important;
+    }
+    .cover-slide video {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: cover !important;
+      display: block !important;
+      border-radius: 6px !important;
+    }
+
+    /* flyer-grid: los flyers de abajo también en vertical */
     .flyer-grid {
       flex-direction: column !important;
       overflow-x: hidden !important;
