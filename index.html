@@ -489,7 +489,7 @@
     <div class="reviews-grid reveal">
       <div class="review-card">
         <div class="review-quote-mark">“</div>
-        <p class="review-text1">El logo que me diseñó representa perfectamente mi marca. Escuchó mis ideas y lo transformó visualmente increíble.</p>
+        <p class="review-text1" data-es="El logo que me diseñó representa perfectamente mi marca. Escuchó mis ideas y lo transformó visualmente increíble." data-en="The logo he designed perfectly represents my brand. He listened to my ideas and transformed them into something visually incredible.">El logo que me diseñó representa perfectamente mi marca. Escuchó mis ideas y lo transformó visualmente increíble.</p>
         <div class="review-foot">
           <div class="review-name">Antonio</div>
           <div class="review-role">Fontanería</div>
@@ -497,7 +497,7 @@
       </div>
       <div class="review-card">
         <div class="review-quote-mark">“</div>
-        <p class="review-text2">Cuidó cada detalle para reflejar nuestra esencia natural y artesanal. Un trabajo coherente, limpio y fiel a la identidad de Naturvellum.</p>
+        <p class="review-text2" data-es="Cuidó cada detalle para reflejar nuestra esencia natural y artesanal. Un trabajo coherente, limpio y fiel a la identidad de Naturvellum." data-en="He took care of every detail to reflect our natural and artisanal essence. Coherent, clean work that stayed true to Naturvellum's identity.">Cuidó cada detalle para reflejar nuestra esencia natural y artesanal. Un trabajo coherente, limpio y fiel a la identidad de Naturvellum.</p>
         <div class="review-foot">
           <div class="review-name">Naturvellum</div>
           <div class="review-role">Empresa de papel</div>
@@ -505,7 +505,7 @@
       </div>
       <div class="review-card">
         <div class="review-quote-mark">“</div>
-        <p class="review-text3">Profesional, creativo y con una atención al detalle que marca la diferencia.</p>
+        <p class="review-text3" data-es="Profesional, creativo y con una atención al detalle que marca la diferencia." data-en="Professional, creative and with an attention to detail that makes all the difference.">Profesional, creativo y con una atención al detalle que marca la diferencia.</p>
         <div class="review-foot">
           <div class="review-name">Moon Café y Copas</div>
           <div class="review-role">Ocio nocturno</div>
@@ -538,7 +538,7 @@
 <footer>
   <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;">
     <span>© 2026 Iván Gómez</span>
-    <span data-i18n="footer_made">Diseñador gráfico en Sevilla</span>
+    <span data-i18n="footer_made">Diseñado en Sevilla</span>
   </div>
 </footer>
 
@@ -607,7 +607,7 @@ const I18N = {
     contact_title:"Hablemos de tu próximo proyecto",
     contact_cta:"Rellenar formulario de contacto →",
     contact_sub:"Abierto a oportunidades profesionales, en local o en remoto, dentro de equipos creativos, agencias o departamentos de comunicación y diseño.",
-    footer_made:"Diseñado en Sevilla",
+    footer_made:"Diseñador gráfico en Sevilla",
     cat_deportivo:"Deportivo", cat_branding:"Branding", cat_social:"Social & Vídeo", cat_logotipo: "Logotipo"
   },
   en:{
@@ -622,8 +622,8 @@ const I18N = {
     about_p1:"I'm <strong>Iván Gómez</strong>, a graphic designer based in Seville. I treat visual identity and sports poster design as two sides of the same coin: a clear, emotional message that connects with whoever sees it.",
     about_p2:"I've worked with sports clubs, artists and small businesses, delivering visual solutions — from logos to social media pieces — that strengthen their presence and brand image.",
     about_p3:"I'm currently looking to join a creative team, agency or communications department where I can keep growing and add value from day one.",
-    skill1:"Logotipo", skill2:"Identidad completa", skill3:"Diseño web",
-    skill4:"Redes sociales", skill5:"Papelería/Packaging", skill6:"Cartelería/Flyers",
+    skill1:"Logo Design", skill2:"Full Brand Identity", skill3:"Web Design",
+    skill4:"Social Media", skill5:"Stationery & Packaging", skill6:"Posters & Flyers",
     collab1:"Nightlife", collab2:"Local brands", collab3:"Fan groups", collab4:"Agencies",
     feat_eyebrow:"Featured project", feat_cat:"Branding · Visual identity", feat_name:"Project name",
     feat_desc:"Space for your flagship project: the one that best sums up your design approach and the result achieved for the client.",
@@ -652,8 +652,8 @@ const I18N = {
     contact_title:"Let's talk about your next project",
     contact_cta:"Fill out the contact form →",
     contact_sub:"Open to professional opportunities, on-site or remote, within creative teams, agencies or design and communications departments.",
-    footer_made:"Designed in Seville",
-    cat_deportivo:"Sports", cat_branding:"Branding", cat_social:"Social & Video"
+    footer_made:"Graphic designer in Seville",
+    cat_deportivo:"Sports", cat_branding:"Branding", cat_social:"Social & Video", cat_logotipo:"Logo"
   }
 };
 
@@ -680,6 +680,11 @@ function applyLang(lang){
 
   document.getElementById('btnES').classList.toggle('active', lang==='es');
   document.getElementById('btnEN').classList.toggle('active', lang==='en');
+
+  // Traducir reseñas
+  document.querySelectorAll('[data-es][data-en]').forEach(el => {
+    el.textContent = lang === 'en' ? el.getAttribute('data-en') : el.getAttribute('data-es');
+  });
 
   const featureLink = document.getElementById('featureLink');
 if(featureLink.getAttribute('href').includes('proyecto.html')){
