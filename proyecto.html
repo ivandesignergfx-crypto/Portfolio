@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proyecto — Iván Gómez</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --ink:#121316; --ink-2:#191B20; --ink-3:#1E2027;
+    --bone:#F2EFE6;
+    --blue:#0250BB; --blue-deep:#01285C; --blue-light:#4C8EE8;
+    --mist:#9B9A8E; --line: rgba(242,239,230,0.12);
+    --display:'Bebas Neue', sans-serif; --body:'Inter', sans-serif; --mono:'JetBrains Mono', monospace;
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  body{ background:var(--ink); color:var(--bone); font-family:var(--body); -webkit-font-smoothing:antialiased; }
+  a{ color:inherit; text-decoration:none; }
+  .wrap{ max-width:1100px; margin:0 auto; padding:0 clamp(20px,5vw,64px); }
+
+  header{ border-bottom:1px solid var(--line); position:sticky; top:0; background:rgba(18,19,22,0.9); backdrop-filter:blur(10px); z-index:10; }
+  .nav{ display:flex; align-items:center; justify-content:space-between; height:76px; }
+  .logo{ font-family:var(--display); font-size:22px; }
+  .logo span{ color:var(--blue-light); }
+  .back-link{ font-family:var(--mono); font-size:13px; color:var(--mist); display:flex; align-items:center; gap:8px; transition:color .2s ease; }
+  .back-link:hover{ color:var(--bone); }
+  .lang-toggle{ font-family:var(--mono); font-size:12px; display:flex; border:1px solid var(--line); border-radius:2px; overflow:hidden; }
+  .lang-toggle button{ background:transparent; border:none; color:var(--mist); padding:8px 12px; cursor:pointer; font-family:var(--mono); font-size:12px; }
+  .lang-toggle button.active{ background:var(--blue); color:var(--bone); }
+
+  .hero{ padding:80px 0 56px; border-bottom:1px solid var(--line); position:relative; overflow:hidden; }
+  .hero::before{
+    content:""; position:absolute; inset:0; z-index:0;
+    background:radial-gradient(ellipse 800px 400px at 10% 0%, rgba(2,80,187,0.35), transparent 60%);
+  }
+  .hero-content{ position:relative; z-index:1; }
+  .eyebrow{ font-family:var(--mono); font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:var(--blue-light); display:flex; align-items:center; gap:10px; margin-bottom:20px; }
+  .eyebrow::before{ content:""; width:24px; height:1px; background:var(--blue-light); }
+  .proj-title{ font-family:var(--display); font-size:clamp(44px,8vw,96px); text-transform:uppercase; line-height:0.95; max-width:900px; }
+  .meta-row{ display:flex; gap:clamp(24px,5vw,56px); flex-wrap:wrap; margin-top:40px; padding-top:28px; border-top:1px solid var(--line); }
+  .meta-item{ display:flex; flex-direction:column; gap:6px; }
+  .meta-label{ font-family:var(--mono); font-size:11px; color:var(--mist); letter-spacing:0.08em; text-transform:uppercase; }
+  .meta-value{ font-size:15px; color:var(--bone); font-weight:500; }
+
+  .cover{ aspect-ratio:16/9; background:linear-gradient(135deg, var(--blue-deep), var(--ink-3)); position:relative; margin:0; border-bottom:1px solid var(--line); }
+  .cover::before{ content:attr(data-ph); position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; font-family:var(--mono); font-size:12px; letter-spacing:0.1em; color:rgba(242,239,230,0.35); padding:20px; }
+
+  .cover-slider{ display:flex; gap:2px; overflow-x:auto; scroll-snap-type:x mandatory; background:var(--line); border-bottom:1px solid var(--line); -webkit-overflow-scrolling:touch; scrollbar-width:thin; justify-content:center; }
+  .cover-slider::-webkit-scrollbar{ height:6px; }
+  .cover-slider::-webkit-scrollbar-thumb{ background:var(--ink-3); }
+  .flyer-grid{ display:flex; flex-wrap:nowrap; gap:2px; overflow-x:auto; scroll-snap-type:x mandatory; background:var(--line); border-top:1px solid var(--line); border-bottom:1px solid var(--line); -webkit-overflow-scrolling:touch; scrollbar-width:thin; }
+  .flyer-grid::-webkit-scrollbar{ height:6px; }
+  .flyer-grid::-webkit-scrollbar-thumb{ background:var(--ink-3); }
+  .flyer-grid-item{ flex:0 0 auto; scroll-snap-align:center; aspect-ratio:9/16; height:min(82vh, 760px); background-size:cover; background-position:center; background-color:var(--ink-2); position:relative; }
+  .flyer-grid-item video{ width:100%; height:100%; object-fit:cover; display:block; }
+  @media(max-width:640px){ .flyer-grid-item{ height:74vh; } }
+  .cover-slide{ flex:0 0 auto; scroll-snap-align:center; aspect-ratio:9/16; height:min(82vh, 760px); background-size:cover; background-position:center; background-color:var(--ink-2); position:relative; }
+  .cover-slide video{ width:100%; height:100%; object-fit:cover; display:block; }
+  .cover-slide{ position:relative; }
+.sound-btn{ position:absolute; bottom:16px; right:16px; width:40px; height:40px; border-radius:50%; background:rgba(11,15,20,0.7); border:1px solid var(--line); color:var(--bone); font-size:16px; cursor:pointer; z-index:2; }
+  @media(max-width:640px){ .cover-slide{ height:74vh; } }
+
+  .content{ padding:88px 0; display:grid; grid-template-columns:0.85fr 1.15fr; gap:72px; }
+  .content-side{ display:flex; flex-direction:column; gap:36px; position:sticky; top:110px; align-self:start; }
+  .side-block{ padding-bottom:24px; border-bottom:1px solid var(--line); }
+  .side-title{ font-family:var(--mono); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--blue-light); margin-bottom:10px; }
+  .side-text{ font-size:14.5px; color:var(--mist); line-height:1.6; }
+  .side-cta{ display:inline-block; margin-top:6px; font-family:var(--mono); font-size:13px; border-bottom:1px solid var(--blue-light); padding-bottom:2px; }
+
+  .content-main h2{ font-family:var(--display); font-size:clamp(26px,3vw,34px); text-transform:uppercase; margin-bottom:16px; letter-spacing:0.01em; }
+  .content-main .block{ margin-bottom:56px; }
+  .content-main p{ font-size:16.5px; line-height:1.8; color:var(--mist); max-width:640px; }
+
+  .gallery{ display:grid; grid-template-columns:1fr 1fr; gap:2px; background:var(--line); border:1px solid var(--line); margin-top:20px; }
+  .gallery-item{ aspect-ratio:4/3; background:linear-gradient(150deg, var(--ink-3), var(--ink-2)); position:relative; }
+  .gallery-item::before{ content:attr(data-ph); position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; font-family:var(--mono); font-size:10.5px; color:rgba(242,239,230,0.3); padding:14px; }
+
+  /* ---- Behance-style case study stack ---- */
+  .case-block-label{ font-family:var(--mono); font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--blue-light); margin:34px 0 10px; }
+  .case-block-label:first-child{ margin-top:0; }
+  .case-full{ aspect-ratio:21/9; background:linear-gradient(150deg, var(--ink-3), var(--ink-2)); position:relative; border:1px solid var(--line); }
+  .case-full::before{ content:attr(data-ph); position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; font-family:var(--mono); font-size:10.5px; color:rgba(242,239,230,0.3); padding:14px; }
+
+  .case-duo, .case-trio, .case-stack{ display:grid; gap:2px; background:var(--line); border:1px solid var(--line); }
+  .case-duo{ grid-template-columns:1fr 1fr; }
+  .case-trio{ grid-template-columns:repeat(3,1fr); }
+  .case-stack{ grid-template-columns:1fr; }
+  
+  .case-item{ aspect-ratio:1/1; background:linear-gradient(150deg, var(--ink-3), var(--ink-2)); position:relative; }
+  .case-item::before{ content:attr(data-ph); position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; font-family:var(--mono); font-size:10px; color:rgba(242,239,230,0.3); padding:12px; }
+  .case-palette{ display:flex; flex-wrap:wrap; gap:18px; background:var(--ink-2); border:1px solid var(--line); padding:28px; }
+  .case-swatch{ display:flex; flex-direction:column; gap:10px; width:92px; }
+  .case-swatch-color{ width:100%; aspect-ratio:1/1; border-radius:2px; border:1px solid var(--line); }
+  .case-swatch-label{ font-family:var(--mono); font-size:9.5px; color:var(--mist); letter-spacing:0.03em; }
+  .case-type{ background:var(--ink-2); border:1px solid var(--line); padding:44px 32px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; min-height:160px; gap:12px; }
+.case-type-text{ font-family:var(--display); font-size:clamp(30px,5vw,56px); text-transform:uppercase; letter-spacing:0.02em; color:var(--bone); opacity:0.9; }
+.case-type-name{ font-family:var(--mono); font-size:12px; letter-spacing:0.08em; text-transform:uppercase; color:var(--mist); }
+  .team-title{ background:linear-gradient(180deg, var(--ink-2), var(--ink-3)); border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:26px 20px; text-align:center; font-family:'Brush Script MT', cursive; font-style:italic; font-size:clamp(26px,4vw,42px); letter-spacing:0.02em; color:var(--bone); text-transform:uppercase; }
+  .team-duo{ display:grid; grid-template-columns:1fr 1fr; gap:2px; background:var(--line); border-bottom:1px solid var(--line); }
+  .team-item{ aspect-ratio:3/4; background-size:cover; background-position:center; background-color:var(--ink-2); cursor:pointer; position:relative; overflow:hidden; }
+  .zoom-hint{ position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; background:rgba(11,15,20,0); opacity:0; transition:opacity 0.2s, background 0.2s; }
+  .team-item:hover .zoom-hint{ opacity:1; background:rgba(11,15,20,0.55); }
+  .zoom-hint svg{ width:28px; height:28px; stroke:var(--bone); }
+  .zoom-hint span{ font-family:var(--mono); font-size:10.5px; letter-spacing:0.06em; color:var(--bone); text-transform:uppercase; }
+  .lightbox{ display:none; position:fixed; inset:0; z-index:999; background:rgba(5,7,10,0.92); align-items:center; justify-content:center; padding:32px; cursor:zoom-out; }
+  .lightbox.active{ display:flex; }
+  .lightbox img{ max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain; box-shadow:0 20px 60px rgba(0,0,0,0.5); }
+  @media(max-width:640px){ .zoom-hint{ opacity:1; background:linear-gradient(180deg, transparent 60%, rgba(11,15,20,0.65)); align-items:flex-end; padding-bottom:14px; } .zoom-hint svg{ width:20px; height:20px; } }
+  @media(max-width:640px){ .team-duo{ grid-template-columns:1fr; } }
+
+
+  @media(max-width:640px){ .case-duo, .case-trio{ grid-template-columns:1fr; } }
+
+  @media(max-width:860px){
+    .content{ grid-template-columns:1fr; }
+    .content-side{ position:static; }
+  }
+
+  .nav-projects{ border-top:1px solid var(--line); background:var(--ink-2); }
+  .nav-projects .wrap{ display:grid; grid-template-columns:1fr 1fr; }
+  .nav-proj-link{ padding:44px 0; display:flex; flex-direction:column; gap:10px; }
+  .nav-proj-link:first-child{ border-right:1px solid var(--line); padding-right:32px; }
+  .nav-proj-link:last-child{ padding-left:32px; text-align:right; align-items:flex-end; }
+  .nav-proj-label{ font-family:var(--mono); font-size:11px; color:var(--mist); letter-spacing:0.08em; text-transform:uppercase; }
+  .nav-proj-name{ font-family:var(--display); font-size:26px; text-transform:uppercase; }
+  @media(max-width:640px){ .nav-projects .wrap{ grid-template-columns:1fr; } .nav-proj-link:first-child{ border-right:none; border-bottom:1px solid var(--line); padding-right:0; } .nav-proj-link:last-child{ padding-left:0; text-align:left; align-items:flex-start; } }
+
+  footer{ padding:28px 0; font-family:var(--mono); font-size:11px; color:rgba(242,239,230,0.4); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+
+  /* Márgenes en hero en móvil */
+  @media(max-width:640px){
+    .hero-content {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+
+  /* Flyers en vertical con scroll en móvil */
+  @media(max-width:640px){
+    .flyer-grid {
+      flex-direction: column;
+      overflow-x: hidden;
+      overflow-y: auto;
+      scroll-snap-type: y mandatory;
+      gap: 16px;
+      padding: 16px;
+      background: transparent;
+    }
+    .flyer-grid-item {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 9/16;
+      scroll-snap-align: start;
+      border-radius: 4px;
+    }
+  }
+
+  .not-found{ padding:160px 0; text-align:center; }
+  .not-found h1{ font-family:var(--display); font-size:48px; text-transform:uppercase; margin-bottom:16px; }
+  .not-found p{ color:var(--mist); margin-bottom:24px; }
+  .not-found a{ font-family:var(--mono); font-size:13px; border-bottom:1px solid var(--blue-light); padding-bottom:3px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="index.html" class="back-link">← <span id="backLabel">Volver al portfolio</span></a>
+    <div class="logo">IVÁN GÓMEZ</div>
+    <div class="lang-toggle">
+      <button id="btnES" class="active">ES</button>
+      <button id="btnEN">EN</button>
+    </div>
+  </div>
+</header>
+
+<div id="appRoot"></div>
+
+<div id="lightbox" class="lightbox" onclick="closeLightbox()">
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<footer>
+  <div class="wrap" style="display:flex; justify-content:space-between; width:100%; flex-wrap:wrap; gap:10px;">
+    <span>© 2026 Iván Gómez</span>
+    <a href="https://www.behance.net/iveffects" target="_blank" rel="noopener">Behance ↗</a>
+  </div>
+</footer>
+
+<script>
+/* ============================================================
+   FICHAS DE PROYECTO
+   ⚠️ PLANTILLA — sustituye todo el contenido de cada proyecto:
+   name, category, client, year, tools, cover (imagen), behance,
+   brief / proceso / resultado (en es y en) y la galería.
+   El "slug" (id) debe coincidir con el usado en index.html
+   ============================================================ */
+const PROYECTOS_DETAIL = {
+  "proyecto-01": { name:"Moon Café y Copas", cat:"branding", client:"Moon Café y Copas", year:"2025", tools:"Photoshop, Illustrator", behance:"https://www.behance.net/gallery/202302745/Moon-Branding", prev:"proyecto-06", next:"proyecto-02", mockupsLabel:{es:"Flyers", en:"Flyers"}, hideBlocks:["type", "applications"],
+    cover:"img/moon.png", imgOverview:"img/moon_02.jpg", imgConcept1:"img/bar1.jpg", imgConcept2:"img/bar2.webp", imgApps:null, palette:["#000000", "#ffffff"], imgType:null,
+    brief:{es:"Moon Café y Copas es un local de ocio nocturno que necesitaba una identidad visual capaz de transmitir su propuesta: noches inolvidables, diversión y una experiencia exclusiva. El objetivo era crear una marca sofisticada y con carácter, que funcionara tanto en el propio local como en redes sociales y soportes promocionales.",en:"Moon Café y Copas is a nightlife venue that needed a visual identity able to convey its promise: unforgettable nights, fun and an exclusive experience. The goal was to build a sophisticated brand with real character, working both in the physical venue and across social media and promotional materials."},
+    process:{es:"Se desarrolló un logotipo con un símbolo de luna creciente integrado en la tipografía, en dos versiones (positivo y negativo) para adaptarse a distintos fondos. Se definió una paleta minimalista en blanco y negro que refuerza la elegancia nocturna de la marca, y se trabajó el naming secundario 'Café y Copas' como complemento del isotipo principal.",en:"A logotype was developed featuring a crescent moon symbol integrated into the typography, in two versions (positive and negative) to adapt to different backgrounds. A minimalist black-and-white palette was defined to reinforce the brand's nocturnal elegance, and the secondary tagline 'Café y Copas' was worked in as a complement to the main mark."},
+    result:{es:"La identidad se aplicó a uniformes del personal (polos), publicaciones para redes sociales (apertura, sesiones de DJ, happy hour), proyecciones ambientales en el propio local y soportes físicos como pulseras de eventos. El resultado es una marca coherente y reconocible en cada punto de contacto con el cliente.",en:"The identity was applied to staff uniforms (polo shirts), social media content (opening night, DJ sessions, happy hour), on-site environmental projections, and physical materials such as event wristbands. The result is a coherent, recognizable brand across every customer touchpoint."},
+    imgMock1:"img/1.png", imgMock2:"img/3.png", imgMock3:"img/2.png" },
+
+
+  "proyecto-02": { name:"Naturvellum", cat:"branding", client:"Naturvellum", year:"2025", tools:"Photoshop, Illustrator", behance:"https://www.behance.net/gallery/202336427/Naturvellum-Branding", prev:"proyecto-01", next:"proyecto-03",
+    cover:"img/naturvellum.png", imgOverview:"img/natur/pre.png", imgConcept1:"img/natur/5.jpg", imgConcept2:"img/natur/4.1.jpg", imgApps:"img/rrss_3.png", palette:["#5db257", "#ffffff"], imgType:null, typeface:{name:"Caviar Dreams", sample:"A B C D e f g h i j k l m n o p q r s t u v w y z"},
+    brief:{es:"Naturvellum es una marca especializada en envases de pañuelos comprometida con el medio ambiente. Necesitaba una identidad visual que transmitiera su propuesta de valor: sustituir el plástico por cartón, reduciendo el impacto ambiental y promoviendo la sostenibilidad a través de la regla de las tres RRR (reutilizar, reciclar y reducir).",en:"Naturvellum is a tissue packaging brand committed to the environment. It needed a visual identity that conveyed its value proposition: replacing plastic with cardboard, reducing environmental impact and promoting sustainability through the three Rs rule (reuse, reduce, recycle)."},
+    process:{es:"Se diseñó un isotipo formado por tres hojas, simbolizando directamente la regla de las tres RRR en la que se basa el producto. Se eligió una paleta verde y blanca que refuerza el carácter natural y ecológico de la marca, junto con la tipografía Caviar Dreams, de trazo suave y orgánico. El sistema se completó con la aplicación en papelería corporativa (tarjetas, sobres, carta) y packaging (bolsa y caja de cartón).",en:"An isotype made up of three leaves was designed, directly symbolizing the three Rs rule the product is based on. A green and white palette was chosen to reinforce the brand's natural, eco-friendly character, paired with Caviar Dreams typeface for its soft, organic strokes. The system was completed with applications on corporate stationery (business cards, envelopes, letterhead) and packaging (bag and cardboard box)."},
+    result:{es:"La identidad se aplicó de forma coherente en papelería, packaging y soportes de marca, transmitiendo en cada pieza el compromiso ecológico de Naturvellum. El resultado es un sistema visual limpio, reconocible y alineado con los valores de sostenibilidad de la marca.",en:"The identity was consistently applied across stationery, packaging and brand materials, conveying Naturvellum's environmental commitment in every piece. The result is a clean, recognizable visual system aligned with the brand's sustainability values."},
+    imgMock1:"img/natur/3.jpg", imgMock2:"img/natur/4.jpg", imgMock3:"img/natur/bolsa.jpg" },
+
+
+  "proyecto-03": { name:"Peña Sevillista Ventippo", cat:"social", client:"Peña Sevillista Ventippo", year:"2024", tools:"Photoshop, Premiere", behance:"https://www.behance.net/gallery/214173515/RRSS", prev:"proyecto-02", next:"proyecto-04",  hideBlocks:["type", "palette", "concept", "cover"], mockupsLabel:{es:"Flyers", en:"Flyers"},
+    cover:null, imgOverview:"img/peña/4.png", imgConcept1:null, imgConcept2:null, imgApps:"img/peña/5.png", palette:[], imgType:null,
+    brief:{es:"La Peña Sevillista Ventippo, situada en Casariche (Sevilla), necesitaba reforzar su identidad digital y aumentar el alcance de sus publicaciones en redes sociales. El objetivo era crear contenido gráfico alineado con los valores y la pasión de la afición, que funcionara tanto para eventos puntuales (Champions, derbis, sorteos) como para la comunicación habitual de la peña.",en:"Peña Sevillista Ventippo, based in Casariche (Seville), needed to strengthen its digital identity and increase the reach of its social media posts. The goal was to create graphic content aligned with the fans' values and passion, working both for one-off events (Champions League, derbies, giveaways) and for the club's everyday communication."},
+    process:{es:"Se gestionaron las redes sociales de la peña de forma integral: diseño de piezas originales para partidos, banners de eventos y anuncios, y redacción de contenido adaptado a cada ocasión. Se trabajó con una identidad visual roja y dorada, coherente con los colores del Sevilla FC, adaptándola a distintos formatos: anuncios de partidos de Champions y Liga, sorteos, convivencias de socios, cenas anuales y promociones de viajes a partidos fuera de casa.",en:"The fan club's social media was managed end-to-end: designing original artwork for matches, event banners and announcements, and writing content tailored to each occasion. A red-and-gold visual identity was used, consistent with Sevilla FC's colors, adapted across formats: Champions League and league match announcements, giveaways, member gatherings, annual dinners and away-match trip promotions."},
+    result:{es:"La estrategia de contenido incrementó el alcance y la interacción de la comunidad, consolidando una identidad visual reconocible en cada publicación. Las piezas diseñadas cubrieron todo el calendario de la peña durante la temporada: desde partidos de Champions hasta eventos sociales y promociones especiales.",en:"The content strategy increased the community's reach and engagement, establishing a recognizable visual identity across every post. The designed pieces covered the fan club's entire calendar throughout the season: from Champions League matches to social events and special promotions."},
+    imgMock1:"img/peña/1.png", imgMock2:"img/peña/2.png", imgMock3:"img/peña/3.png" },
+
+
+  "proyecto-04": { name:"Proyecto deportivo", cat:"deportivo", client:"Proyecto personal", year:"2024", tools:"Photoshop", behance:"https://www.behance.net/gallery/226886473/Cycling-Visual-Concept", prev:"proyecto-03", next:"proyecto-05", hideBlocks:["overview","concept","type","palette","applications","mockups", "cover"],
+    cover:null, imgOverview:null, imgConcept1:null, imgConcept2:null, imgApps:null, palette:[], imgType:null,
+    teams:[
+      { title:"Tadej Pogačar", images:["img/depor/final3.jpg","img/depor/final1.png","img/depor/final2.jpg","img/depor/final2_.png"] },
+      { title:"Ineos", images:["img/depor/ORIGINAL.jpg","img/depor/carlos.png" ] },
+      { title:"Jonas Vingegaard", images:["img/depor/ving1.jpg","img/depor/ving2.jpg" ] },
+      { title:"Otros equipos", images:["img/depor/PAU-fin.jpg","img/depor/storie1.png", "img/depor/romeo_storie_Nero_AI_Image_Upscaler_Photo_Face.png","img/depor/storie_pablo.png", "img/depor/Sin-título-1.jpg","img/depor/caruso_storie.jpg", "img/depor/storie_Remco.png", "img/depor/storie_remco.jpg", "img/depor/storie_isaac.jpg", "img/depor/carapaz_final_storie.jpg"] }
+    ],
+    brief:{es:"Proyecto personal de creación de pósters conceptuales de ciclismo, pensados para su publicación en redes sociales. El objetivo era diseñar piezas de alto impacto visual centradas en ciclistas y equipos profesionales (Pogačar, Ineos, entre otros), combinando fotografía deportiva con recursos gráficos y tipográficos que refuercen la narrativa de cada corredor.",en:"Personal project creating conceptual cycling posters designed for social media publishing. The goal was to design high-impact visual pieces centered on professional cyclists and teams (Pogačar, Ineos, among others), combining sports photography with graphic and typographic elements that reinforce each rider's narrative."},
+    process:{es:"Se trabajó con montajes fotográficos y retoque digital para crear composiciones dramáticas (alas, paisajes, efectos de luz) que elevan la imagen del ciclista a un plano casi mitológico. Se incorporó tipografía manuscrita y titulares de impacto para cada pieza, y se simuló su publicación real en Instagram mediante mockups de móvil, mostrando cómo lucirían las piezas en el feed de los propios equipos",en:"Photo compositing and digital retouching were used to create dramatic compositions (wings, landscapes, light effects) that elevate the cyclist's image to an almost mythological level. Handwritten typography and bold headlines were incorporated for each piece, and their real Instagram publication was simulated through phone mockups, showing how the artwork would look in the feed of teams"},
+    result:{es:" múltiples pósters de distintos ciclistas y equipos (UAE, Ineos, Movistar, entre otros), cada uno con su propia identidad visual y narrativa, demostrando versatilidad en dirección de arte, retoque fotográfico y diseño para redes sociales dentro del ámbito deportivo.",en:"Multiple posters of different cyclists and teams (UAE, Ineos, Movistar, among others), each with its own visual identity and narrative, demonstrating versatility in art direction, photo retouching and social media design within the sports field."},
+    imgMock1:null, imgMock2:null, imgMock3:null },
+
+
+  "proyecto-05": { name:"Logotipo", cat:"logotipo", client:"Antonio Vitorino", year:"2024", tools:"Photoshop, Illustrator", behance:null, prev:"proyecto-04", next:"proyecto-06", hideBlocks:["type", "cover", "applications" ],
+    cover:null, imgOverview:"img/av/portada.png", imgConcept1:"img/av/1.jpg", imgConcept2:"img/av/2.jpg", imgApps:null, palette:["#0e71b8", "#ea5b0c", "#ffffff"], imgType:null,
+    brief:{es:"Antonio Vitorino es una marca de fontanería que representa el trabajo independiente y profesional de un técnico que entiende la importancia de la confianza, la rapidez y la eficiencia en cada servicio. El objetivo era crear una identidad visual cercana y accesible, capaz de transmitir soluciones a medida y un servicio técnico atento a cada detalle",en:"Antonio Vitorino is a plumbing brand that represents the independent, professional work of a technician who understands the importance of trust, speed and efficiency in every service. The goal was to create a friendly, approachable visual identity able to convey tailored solutions and a technical service that pays attention to every detail."},
+    process:{es:"Se diseñó un isotipo que combina una llama y una gota de agua, simbolizando de forma directa los servicios de fontanería y calefacción. Se definió una paleta de azul y naranja que aporta calidez y confianza a partes iguales, junto con un patrón de marca basado en el propio símbolo. El logotipo se completó con el nombre del profesional en una tipografía sólida y legible, reforzando el carácter personal y cercano del servicio.",en:"An isotype combining a flame and a water drop was designed, directly symbolizing plumbing and heating services. A blue and orange palette was defined to bring warmth and trust in equal measure, along with a brand pattern based on the symbol itself. The logotype was completed with the professional's name in a solid, legible typeface, reinforcing the personal and approachable nature of the service."},
+    result:{es:"La identidad se aplicó a uniformes (camiseta), gorra, tarjetas de visita y demás soportes de marca personal, transmitiendo profesionalidad y cercanía en cada punto de contacto con el cliente. El resultado es un sistema visual sólido y reconocible para un servicio técnico independiente.",en:"The identity was applied to uniforms (t-shirt), a cap, business cards and other personal branding materials, conveying professionalism and approachability at every customer touchpoint. The result is a solid, recognizable visual system for an independent technical service."},
+    imgMock1:"img/av/mock1.png", imgMock2:"img/av/mock3.png", imgMock3:"img/av/mock2.png" },
+
+
+  "proyecto-06": { name:"Redes sociales", cat:"social", client:"Redes sociales", year:"2025", tools:"Photoshop", behance:null, prev:"proyecto-05", next:"proyecto-01", hideBlocks:["type", "applications", "overview", "mockups", "concept", "palette", "galleryTitle" ],
+    coverSlider:["img/flyers/alvama.jpg", "img/flyers/alvama_final.mp4", "img/flyers/ballesteros.png", "img/flyers/ballesteros_animado.mp4"], coverGrid:["img/flyers/alexmartini2.png", "img/flyers/1.png", "img/flyers/2.png", "img/flyers/3.png", "img/flyers/4.png"], imgOverview:null, conceptImgs:["img/flyers/ballesteros.png"], imgApps:null, palette:[], imgType:null,
+    brief:{es:"Recopilación de flyers diseñados para eventos de ocio nocturno: sesiones de DJ, fiestas temáticas y noches especiales en distintas discotecas y clientes. El objetivo en cada encargo era el mismo: crear una pieza de alto impacto que funcionara tanto en redes sociales como en pantalla, comunicando de un vistazo el artista, la fecha y las condiciones del evento.",en:"A collection of flyers designed for nightlife events: DJ sessions, themed parties and special nights for different venues and clients. The goal in every commission was the same: create a high-impact piece that worked both on social media and on screen, communicating the artist, date and event details at a glance"},
+    process:{es:"Cada flyer se adaptó a la identidad del evento y del artista: desde estéticas urbanas con tipografía degotante y neones (Alvamaice, Ballesteros), hasta ambientes tropicales y veraniegos (Alex Martini) o composiciones nocturnas más sobrias en tonos dorados y negros (Moon). En todos los casos se trabajó con montaje fotográfico, tipografía de gran formato como elemento protagonista y una jerarquía clara de la información (fecha, hora, precios, colaboradores).",en:"Each flyer was adapted to the identity of the event and the artist: from urban aesthetics with dripping typography and neon lights (Alvamaice, Ballesteros), to tropical summer moods (Alex Martini) or more sober nighttime compositions in gold and black tones (Moon). In every case, photo compositing, large-format typography as the main element, and a clear information hierarchy (date, time, prices, collaborators) were used."},
+    result:{es:"El conjunto de piezas muestra la capacidad de adaptación a distintos estilos y públicos dentro del sector del ocio nocturno, manteniendo siempre un acabado profesional y un fuerte impacto visual pensado para redes sociales",en:"The set of pieces shows the ability to adapt to different styles and audiences within the nightlife sector, always maintaining a professional finish and a strong visual impact designed for social media"},
+    imgMock1:null, imgMock2:null, imgMock3:null },
+};
+
+const NAMES = { es:{}, en:{} };
+for(let i=1;i<=9;i++){
+  const id = "proyecto-0"+i;
+  NAMES.es[id] = "Proyecto "+String(i).padStart(2,"0");
+  NAMES.en[id] = "Project "+String(i).padStart(2,"0");
+}
+
+const CAT_LABEL = {
+  es:{ deportivo:"Deportivo", branding:"Branding", social:"Social & Vídeo", logotipo:"Logotipo"},
+  en:{ deportivo:"Sports", branding:"Branding", social:"Social & Video" }
+};
+
+const T = {
+  es:{
+    back:"Volver al portfolio", client:"Cliente", year:"Año", category:"Categoría", tools:"Herramientas",
+    viewBehance:"Ver en Behance ↗", brief:"Brief", briefText:"Describe aquí el objetivo del cliente: qué necesitaba comunicar y a qué público se dirigía la pieza.",
+    process:"Proceso", processText:"Explica el proceso creativo: referencias, bocetos, pruebas de color/tipografía y decisiones clave hasta llegar al resultado final.",
+    result:"Resultado", resultText:"Cuenta el resultado: cómo se aplicó el diseño final y qué impacto tuvo para el cliente (redes, impresión, reconocimiento, etc.).",
+    gallery:"Galería", galleryPh:"Añadir imagen del proyecto",
+    caseOverview:"Presentación", caseOverviewPh:"Sustituir por imagen general del proyecto (cover / mockup principal)",
+    caseConcept:"Concepto", caseConceptPh:"Sustituir por imagen del concepto",
+    casePalette:"Paleta de color", caseSwatchLabel:"HEX",
+    caseType:"Tipografía", caseTypeText:"Aa Bb Cc", zoomHint:"Ver imagen completa",
+    caseApplications:"Aplicaciones", caseApplicationsPh:"Sustituir por imagen de aplicación de marca",
+    caseMockups:"Mockups", caseMockupPh:"Sustituir por mockup",
+    prev:"Anterior", next:"Siguiente", coverPh:"SUSTITUIR POR IMAGEN PRINCIPAL DEL PROYECTO",
+    notFoundTitle:"Proyecto no encontrado", notFoundText:"Este proyecto todavía no existe o el enlace no es correcto.", notFoundLink:"← Volver al portfolio"
+  },
+  en:{
+    back:"Back to portfolio", client:"Client", year:"Year", category:"Category", tools:"Tools",
+    viewBehance:"View on Behance ↗", brief:"Brief", briefText:"Describe the client's goal here: what they needed to communicate and who the piece was aimed at.",
+    process:"Process", processText:"Explain the creative process: references, sketches, color/type tests and key decisions on the way to the final result.",
+    result:"Result", resultText:"Tell the result: how the final design was applied and what impact it had for the client (social, print, recognition, etc.).",
+    gallery:"Gallery", galleryPh:"Add project image",
+    caseOverview:"Overview", caseOverviewPh:"Replace with a general project image (cover / main mockup)",
+    caseConcept:"Concept", caseConceptPh:"Replace with concept image",
+    casePalette:"Color palette", caseSwatchLabel:"HEX",
+    caseType:"Typography", caseTypeText:"Aa Bb Cc", zoomHint:"View full image",
+    caseApplications:"Applications", caseApplicationsPh:"Replace with brand application image",
+    caseMockups:"Mockups", caseMockupPh:"Replace with mockup",
+    prev:"Previous", next:"Next", coverPh:"REPLACE WITH MAIN PROJECT IMAGE",
+    notFoundTitle:"Project not found", notFoundText:"This project doesn't exist yet, or the link isn't correct.", notFoundLink:"← Back to portfolio"
+  }
+};
+
+function getParams(){
+  const p = new URLSearchParams(window.location.search);
+  return { id: p.get('id'), lang: (p.get('lang')==='en') ? 'en' : 'es' };
+}
+function toggleSound(videoId, btn){
+  const video = document.getElementById(videoId);
+  video.muted = !video.muted;
+  btn.textContent = video.muted ? '🔇' : '🔊';
+}
+function openLightbox(src){
+  document.getElementById('lightboxImg').src = src;
+  document.getElementById('lightbox').classList.add('active');
+}
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('active');
+  document.getElementById('lightboxImg').src = '';
+}
+// Si hay ruta de imagen, la pinta de fondo; si no, deja el placeholder de siempre.
+function mediaAttrs(src, ph){
+  if(src){
+    return `data-ph="" style="background-image:url('${src}');background-size:cover;background-position:center;"`;
+  }
+  return `data-ph="${ph}"`;
+}
+
+// Pinta los swatches con los hex reales si hay paleta; si no, deja el placeholder de siempre.
+function paletteHTML(palette, swatchLabel){
+  if(palette && palette.length){
+    return palette.map(hex => `
+      <div class="case-swatch"><div class="case-swatch-color" style="background:${hex};"></div><div class="case-swatch-label">${swatchLabel} ${hex.toUpperCase()}</div></div>
+    `).join('');
+  }
+  const fallback = ['var(--blue)','var(--blue-deep)','var(--blue-light)','var(--ink-3)','var(--bone)'];
+  return fallback.map(c => `
+    <div class="case-swatch"><div class="case-swatch-color" style="background:${c};"></div><div class="case-swatch-label">${swatchLabel} #______</div></div>
+  `).join('');
+}
+
+function render(){
+  const { id, lang } = getParams();
+  const t = T[lang];
+  const root = document.getElementById('appRoot');
+  document.documentElement.lang = lang;
+  document.getElementById('backLabel').textContent = t.back;
+  document.getElementById('btnES').classList.toggle('active', lang==='es');
+  document.getElementById('btnEN').classList.toggle('active', lang==='en');
+
+  const data = PROYECTOS_DETAIL[id];
+
+  if(!data){
+    root.innerHTML = `
+      <div class="wrap not-found">
+        <h1>${t.notFoundTitle}</h1>
+        <p>${t.notFoundText}</p>
+        <a href="index.html">${t.notFoundLink}</a>
+      </div>`;
+    return;
+  }
+
+  const name = NAMES[lang][id];
+  const prevName = NAMES[lang][data.prev];
+  const nextName = NAMES[lang][data.next];
+
+  root.innerHTML = `
+    <section class="hero">
+      <div class="wrap hero-content">
+        <div class="eyebrow">${CAT_LABEL[lang][data.cat]}</div>
+        <h1 class="proj-title">${name}</h1>
+        <div class="meta-row">
+          <div class="meta-item"><span class="meta-label">${t.client}</span><span class="meta-value">${data.client}</span></div>
+          <div class="meta-item"><span class="meta-label">${t.year}</span><span class="meta-value">${data.year}</span></div>
+          <div class="meta-item"><span class="meta-label">${t.category}</span><span class="meta-value">${CAT_LABEL[lang][data.cat]}</span></div>
+          <div class="meta-item"><span class="meta-label">${t.tools}</span><span class="meta-value">${data.tools}</span></div>
+        </div>
+      </div>
+    </section>
+
+    ${!(data.hideBlocks||[]).includes('cover') ? `
+    ${(data.coverSlider && data.coverSlider.length)
+  ? `<div class="cover-slider">${data.coverSlider.map((src, i) => {
+      const isVideo = /\.(mp4|webm|mov)$/i.test(src);
+      return isVideo
+        ? `<div class="cover-slide">
+             <video id="reelVideo${i}" src="${src}" autoplay loop muted playsinline></video>
+             <button class="sound-btn" onclick="toggleSound('reelVideo${i}', this)">🔇</button>
+           </div>`
+        : `<div class="cover-slide" style="background-image:url('${src}');"></div>`;
+    }).join('')}</div>`
+  : `<div class="cover" ${mediaAttrs(data.cover, t.coverPh)}></div>`}
+
+    ${(data.coverGrid && data.coverGrid.length)
+      ? `<div class="flyer-grid">${data.coverGrid.map((src, i) => {
+          const isVideo = /\.(mp4|webm|mov)$/i.test(src);
+          return isVideo
+            ? `<div class="flyer-grid-item">
+                 <video id="gridVideo${i}" src="${src}" autoplay loop muted playsinline></video>
+                 <button class="sound-btn" onclick="toggleSound('gridVideo${i}', this)">🔇</button>
+               </div>`
+            : `<div class="flyer-grid-item" style="background-image:url('${src}');"></div>`;
+        }).join('')}</div>`
+      : ''}
+    ` : ''}
+
+    <section class="wrap content">
+      <aside class="content-side">
+        <div class="side-block">
+          <div class="side-title">${t.client}</div>
+          <div class="side-text">${data.client}</div>
+        </div>
+        <div class="side-block">
+          <div class="side-title">${t.tools}</div>
+          <div class="side-text">${data.tools}</div>
+        </div>
+        ${data.behance ? `<div class="side-block" style="border-bottom:none;">
+          <a class="side-cta" href="${data.behance}" target="_blank" rel="noopener">${t.viewBehance}</a>
+        </div>` : ""}
+      </aside>
+
+      <div class="content-main">
+        <div class="block">
+          <h2>${t.brief}</h2>
+          <p>${(data.brief && data.brief[lang]) || t.briefText}</p>
+        </div>
+        <div class="block">
+          <h2>${t.process}</h2>
+          <p>${(data.process && data.process[lang]) || t.processText}</p>
+        </div>
+        <div class="block">
+          <h2>${t.result}</h2>
+          <p>${(data.result && data.result[lang]) || t.resultText}</p>
+        </div>
+        <div class="block">
+  ${!(data.hideBlocks||[]).includes('galleryTitle') ? `<h2>${t.gallery}</h2>` : ''}
+
+          ${!(data.hideBlocks||[]).includes('overview') ? `
+          <div class="case-block-label">${t.caseOverview}</div>
+          <div class="case-full" ${mediaAttrs(data.imgOverview, t.caseOverviewPh)}></div>
+          ` : ''}
+
+          ${!(data.hideBlocks||[]).includes('concept') ? `
+          <div class="case-block-label">${t.caseConcept}</div>
+          <div class="${(data.conceptImgs && data.conceptImgs.length) ? 'case-stack' : 'case-duo'}">
+            ${(data.conceptImgs && data.conceptImgs.length)
+              ? data.conceptImgs.map(src => `<div class="case-item" ${mediaAttrs(src, t.caseConceptPh)}></div>`).join('')
+              : `<div class="case-item" ${mediaAttrs(data.imgConcept1, t.caseConceptPh)}></div><div class="case-item" ${mediaAttrs(data.imgConcept2, t.caseConceptPh)}></div>`}
+          </div>
+          ` : ''}
+
+          ${!(data.hideBlocks||[]).includes('palette') ? `
+          <div class="case-block-label">${t.casePalette}</div>
+          <div class="case-palette">
+            ${paletteHTML(data.palette, t.caseSwatchLabel)}
+          </div>
+          ` : ''}
+
+          ${!(data.hideBlocks||[]).includes('type') ? `
+          <div class="case-block-label">${t.caseType}</div>
+<div class="case-type">
+  <div class="case-type-text">${(data.typeface && data.typeface.sample) || t.caseTypeText}</div>
+  ${(data.typeface && data.typeface.name) ? `<div class="case-type-name">${data.typeface.name}</div>` : ''}
+</div>
+          ` : ''}
+
+          ${!(data.hideBlocks||[]).includes('applications') ? `
+          <div class="case-block-label">${t.caseApplications}</div>
+          <div class="case-full" ${mediaAttrs(data.imgApps, t.caseApplicationsPh)}></div>
+          ` : ''}
+
+          ${!(data.hideBlocks||[]).includes('mockups') ? `
+          <div class="case-block-label">${(data.mockupsLabel && data.mockupsLabel[lang]) || t.caseMockups}</div>
+          <div class="case-trio">
+            <div class="case-item" ${mediaAttrs(data.imgMock1, t.caseMockupPh)}></div>
+            <div class="case-item" ${mediaAttrs(data.imgMock2, t.caseMockupPh)}></div>
+            <div class="case-item" ${mediaAttrs(data.imgMock3, t.caseMockupPh)}></div>
+          </div>
+          ` : ''}
+
+          ${(data.teams && data.teams.length) ? data.teams.map(team => `
+          <div class="team-title">${team.title}</div>
+          <div class="team-duo">
+            ${team.images.map(src => `<div class="team-item" style="background-image:url('${src}');" onclick="openLightbox('${src}')">
+              <div class="zoom-hint">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/><path d="M11 8v6M8 11h6"/></svg>
+                <span>${t.zoomHint}</span>
+              </div>
+            </div>`).join('')}
+          </div>
+          `).join('') : ''}
+        </div>
+      </div>
+    </section>
+
+    <nav class="nav-projects">
+      <div class="wrap">
+        <a class="nav-proj-link" href="proyecto.html?id=${data.prev}&lang=${lang}">
+          <span class="nav-proj-label">← ${t.prev}</span>
+          <span class="nav-proj-name">${prevName}</span>
+        </a>
+        <a class="nav-proj-link" href="proyecto.html?id=${data.next}&lang=${lang}">
+          <span class="nav-proj-label">${t.next} →</span>
+          <span class="nav-proj-name">${nextName}</span>
+        </a>
+      </div>
+    </nav>
+  `;
+}
+
+document.getElementById('btnES').addEventListener('click', ()=>{
+  const { id } = getParams();
+  window.location.search = `?id=${id||''}&lang=es`;
+});
+document.getElementById('btnEN').addEventListener('click', ()=>{
+  const { id } = getParams();
+  window.location.search = `?id=${id||''}&lang=en`;
+});
+
+render();
+</script>
+
+</body>
+</html>
