@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Solicitud de proyecto — @ivangomezz.creative</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#191B1D;
+    --paper:#F4EFE4;
+    --paper-dim:#EAE3D2;
+    --azul:#1B3B6F;
+    --azul-dark:#122A50;
+    --gold:#C89B3C;
+    --rust:#A8442E;
+    --muted:#8A8578;
+    --line:#D8D0BC;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--ink);
+    font-family:'Inter',sans-serif;
+    color:var(--ink);
+    padding:48px 20px;
+    min-height:100vh;
+  }
+  .sheet{
+    max-width:680px;
+    margin:0 auto;
+    background:var(--paper);
+    border-radius:2px;
+    position:relative;
+    overflow:hidden;
+    box-shadow:0 30px 80px rgba(0,0,0,0.45);
+  }
+  .sheet::before{
+    content:'';
+    position:absolute;
+    top:0; left:0; right:0;
+    height:6px;
+    background:var(--azul);
+  }
+  
+  header{
+    padding:52px 48px 32px;
+    border-bottom:1px solid var(--line);
+    position:relative;
+  }
+  .header-top{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    margin-bottom:20px;
+  }
+  .profile-photo{
+    flex:none;
+    width:72px;
+    height:72px;
+    border-radius:50%;
+    border:2px solid var(--azul);
+    background:var(--paper-dim);
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .profile-photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .profile-photo .fallback{
+    font-family:'Fraunces',serif;
+    font-size:22px;
+    color:var(--azul);
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:12px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--azul);
+    margin:0 0 10px;
+  }
+  h1{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:32px;
+    line-height:1.15;
+    margin:0;
+    color:var(--ink);
+  }
+  .lede{
+    font-size:15px;
+    color:var(--muted);
+    line-height:1.6;
+    max-width:600px;
+    margin:0;
+  }
+  .stamp{
+    position:absolute;
+    top:44px;
+    right:48px;
+    width:84px;
+    height:84px;
+    border:1px solid var(--gold);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transform:rotate(8deg);
+  }
+  .stamp-inner{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:8.5px;
+    letter-spacing:0.06em;
+    text-align:center;
+    color:var(--gold);
+    line-height:1.5;
+    text-transform:uppercase;
+  }
+  form{ padding:8px 48px 8px; }
+  .section{ padding:36px 0; border-bottom:1px solid var(--line); }
+  .section:last-of-type{ border-bottom:none; padding-bottom:8px; }
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    gap:12px;
+    margin:0 0 24px;
+  }
+  .section-num{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+    color:var(--gold);
+  }
+  .section-title{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:20px;
+    margin:0;
+    color:var(--ink);
+  }
+  .field{ margin-bottom:20px; }
+  .field:last-child{ margin-bottom:0; }
+  .row{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+label{
+    display:block;
+    font-size:12px;
+    font-family:'IBM Plex Mono',monospace;
+    letter-spacing:0.03em;
+    color:var(--muted);
+    margin-bottom:10px;
+    line-height:1.5;
+    text-transform:uppercase;
+}
+  label .req{ color:var(--rust); }
+  input, select, textarea{
+    width:100%;
+    background:var(--paper-dim);
+    border:1px solid var(--line);
+    border-radius:2px;
+    padding:12px 14px;
+    font-family:'Inter',sans-serif;
+    font-size:14px;
+    color:var(--ink);
+  }
+  input:focus, select:focus, textarea:focus{
+    outline:none;
+    border-color:var(--azul);
+    background:var(--paper);
+  }
+  textarea{ resize:vertical; min-height:90px; line-height:1.5; }
+  ::placeholder{ color:#B0A98F; }
+  .hint{
+    font-size:12px;
+    color:var(--muted);
+    margin-top:6px;
+    line-height:1.4;
+  }
+  fieldset{ border:none; padding:0; margin:0; }
+  .chip-group{ display:flex; flex-wrap:wrap; gap:8px; }
+  .chip{ position:relative; }
+  .chip input{
+    position:absolute;
+    opacity:0;
+    width:100%; height:100%;
+    cursor:pointer;
+    margin:0;
+  }
+  .chip span{
+    display:block;
+    padding:9px 16px;
+    border:1px solid var(--line);
+    border-radius:20px;
+    font-size:13px;
+    background:var(--paper-dim);
+    color:var(--ink);
+    white-space:nowrap;
+  }
+  .chip input:checked + span{
+    background:var(--azul);
+    border-color:var(--azul);
+    color:var(--paper);
+  }
+  .error-text{
+    display:none;
+    font-size:12px;
+    color:var(--rust);
+    margin-top:8px;
+  }
+  .error-text.show{ display:block; }
+  .submit-row{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:16px;
+    margin-top:36px;
+    flex-wrap:wrap;
+  }
+  button[type="submit"]{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+    letter-spacing:0.04em;
+    text-transform:uppercase;
+    background:var(--azul);
+    color:var(--paper);
+    border:none;
+    padding:16px 28px;
+    border-radius:2px;
+    cursor:pointer;
+  }
+  button[type="submit"]:hover{ background:var(--azul-dark); }
+  .submit-note{
+    font-size:12px;
+    color:var(--muted);
+    max-width:280px;
+    line-height:1.5;
+  }
+  .socials{
+    display:flex;
+    justify-content:center;
+    gap:18px;
+    padding:32px 48px 8px;
+  }
+  .socials a{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    border:1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--azul);
+    text-decoration:none;
+  }
+  .socials a:hover{ background:var(--azul); color:var(--paper); border-color:var(--azul); }
+  .socials svg{ width:17px; height:17px; }
+  .footer-tag{
+    text-align:center;
+    padding:14px 0 36px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    color:var(--muted);
+    letter-spacing:0.04em;
+  }
+  .thankyou{
+    display:none;
+    padding:64px 48px;
+    text-align:center;
+  }
+  .thankyou.show{ display:block; }
+  .thankyou-icon{
+    width:56px;
+    height:56px;
+    border-radius:50%;
+    border:1px solid var(--azul);
+    color:var(--azul);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0 auto 24px;
+  }
+  .thankyou h2{
+    font-family:'Fraunces',serif;
+    font-weight:500;
+    font-size:26px;
+    margin:0 0 12px;
+    color:var(--ink);
+  }
+  .thankyou p{
+    font-size:14px;
+    color:var(--muted);
+    line-height:1.6;
+    max-width:380px;
+    margin:0 auto;
+  }
+
+  /* ===========================
+   TABLETS
+=========================== */
+
+@media (max-width:1024px){
+
+.sheet{
+    width:95%;
+}
+
+header{
+    padding:42px 30px 28px;
+}
+
+form{
+    padding:8px 30px;
+}
+
+.row{
+    grid-template-columns:1fr;
+}
+
+.stamp{
+    display:none;
+}
+
+}
+
+
+/* ===========================
+   MÓVILES
+=========================== */
+
+@media (max-width:768px){
+
+body{
+    padding:0;
+    background:var(--paper);
+}
+
+.sheet{
+    width:100%;
+    border-radius:0;
+    box-shadow:none;
+}
+
+header{
+    padding:32px 22px 24px;
+}
+
+.header-top{
+    align-items:center;
+    gap:15px;
+}
+
+.profile-photo{
+    width:58px;
+    height:58px;
+}
+
+h1{
+    font-size:28px;
+    line-height:1.2;
+}
+
+.lede{
+    font-size:16px;
+    line-height:1.7;
+}
+
+form{
+    padding:0 22px;
+}
+
+.section{
+    padding:30px 0;
+}
+
+.section-title{
+    font-size:18px;
+}
+
+.row{
+    display:block;
+}
+
+.row .field:last-child{
+    margin-bottom:20px;
+}
+
+label{
+    font-size:13px;
+}
+
+input,
+select,
+textarea{
+    font-size:16px;
+    padding:15px;
+}
+
+textarea{
+    min-height:130px;
+}
+
+.chip-group{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.chip{
+    width:100%;
+}
+
+.chip span{
+    width:100%;
+    text-align:center;
+    white-space:normal;
+    padding:14px;
+}
+
+.submit-row{
+    flex-direction:column;
+}
+
+button[type="submit"]{
+    width:100%;
+    padding:18px;
+    font-size:14px;
+}
+
+.socials{
+    padding:30px 20px 12px;
+}
+
+.footer-tag{
+    padding-bottom:30px;
+}
+
+.thankyou{
+    padding:60px 22px;
+}
+
+}
+
+.field{
+    margin-bottom:26px;
+}
+
+label{
+    display:block;
+    line-height:1.5;
+    margin-bottom:12px;
+    white-space:normal;
+}
+
+input,
+select,
+textarea{
+    margin-top:0;
+}
+
+#instagram{
+    margin-top:8px;
+}
+  
+.status-message{margin-top:18px;text-align:center;font-size:13px;font-family:'IBM Plex Mono',monospace;display:none}
+.status-message.show{display:block}
+.status-error{color:#A8442E}
+.loading{opacity:.75;pointer-events:none}
+button[disabled]{cursor:not-allowed}
+
+  @media (max-width:768px){
+
+    .field{
+        margin-bottom:30px;
+    }
+
+    label{
+        margin-bottom:12px;
+        line-height:1.6;
+    }
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="sheet">
+  <header>
+    
+    <div class="header-top">
+      <div class="profile-photo">
+        <img src="link/yo.png" alt="Foto de perfil de Ivan Gomez" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <span class="fallback" style="display:none;">IG</span>
+      </div>
+      <div>
+        <p class="eyebrow">Formulario</p>
+        <h1>Cuéntame sobre tu empresa</h1>
+      </div>
+    </div>
+    <p class="lede">Cuanto más detalle me des aquí, más rápido y ajustado será el presupuesto que te envíe. Tómate tu tiempo! 🍵</p>
+  </header>
+
+  <form id="briefForm" novalidate>
+    <input type="hidden" name="access_key" value="78e05627-1f66-4234-a040-5d6222b32110">
+
+    <div class="section">
+      <div class="section-head">
+        <span class="section-num">01</span>
+        <h2 class="section-title">Datos de contacto</h2>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="nombre">Nombre <span class="req">*</span></label>
+          <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
+        </div>
+        <div class="field">
+          <label for="negocio">Empresa</label>
+          <input type="text" id="negocio" name="negocio" placeholder="Nombre de tu empresa (si aplica)">
+        </div>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="email">Email <span class="req">*</span></label>
+          <input type="email" id="email" name="email" placeholder="tuemail@correo.com" required>
+        </div>
+        <div class="field">
+          <label for="whatsapp">WhatsApp / teléfono</label>
+          <input type="tel" id="whatsapp" name="whatsapp" placeholder="+34 600 000 000">
+        </div>
+      </div>
+      <div class="field">
+        <label for="instagram">Instagram de la empresa (si tiene)</label>
+        <input type="text" id="instagram" name="instagram" placeholder="@tunegocio">
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <span class="section-num">02</span>
+        <h2 class="section-title">Sobre el proyecto</h2>
+      </div>
+      <div class="field">
+        <label>¿Qué necesitas? <span class="req">*</span></label>
+        <fieldset class="chip-group">
+          <label class="chip"><input type="checkbox" name="servicio" value="Logotipo"><span>Logotipo</span></label>
+          <label class="chip"><input type="checkbox" name="servicio" value="Identidad de marca completa"><span>Identidad completa</span></label>
+          <label class="chip"><input type="checkbox" name="servicio" value="Diseño web"><span>Diseño web</span></label>
+          <label class="chip"><input type="checkbox" name="servicio" value="Diseño para redes sociales"><span>Redes sociales</span></label>
+          <label class="chip"><input type="checkbox" name="servicio" value="Papelería / packaging"><span>Papelería / packaging</span></label>
+          <label class="chip"><input type="checkbox" name="servicio" value="Cartelería / flyers"><span>Cartelería / flyers</span></label>
+          <label class="chip"><input type="checkbox" name="servicio" value="Otro"><span>Otro</span></label>
+        </fieldset>
+        <p class="error-text" id="servicioError">Selecciona al menos una opción.</p>
+      </div>
+      <div class="field">
+        <label for="descripcion">Cuéntame de tu negocio y qué buscas <span class="req">*</span></label>
+        <textarea id="descripcion" name="descripcion" placeholder="A qué te dedicas, qué problema quieres resolver con el diseño, qué sensación quieres transmitir..." required></textarea>
+      </div>
+      <div class="field">
+        <label for="referencias">Referencias o inspiración</label>
+        <textarea id="referencias" name="referencias" placeholder="Marcas, cuentas de Instagram, colores o estilos que te gusten (opcional)"></textarea>
+      </div>
+      <div class="field">
+        <label for="moodboard">Enlace a tu moodboard</label>
+        <input type="url" id="moodboard" name="moodboard" placeholder="Pinterest, Google Drive, Canva... (opcional)">
+        <p class="hint">Si tienes un tablero de referencias visuales, pega aquí el enlace.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <span class="section-num">03</span>
+        <h2 class="section-title">Presupuesto y plazos</h2>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label for="presupuesto">Presupuesto aproximado</label>
+          <select id="presupuesto" name="presupuesto">
+            <option value="">Prefiero comentarlo</option>
+            <option value="Menos de 100€">Menos de 100€</option>
+            <option value="100€ - 300€">100€ – 300€</option>
+            <option value="300€ - 600€">300€ – 600€</option>
+            <option value="Más de 600€">Más de 600€</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="plazo">Plazo deseado</label>
+          <select id="plazo" name="plazo">
+            <option value="">Sin prisa</option>
+            <option value="Urgente (menos de 1 semana)">Urgente (menos de 1 semana)</option>
+            <option value="2-3 semanas">2–3 semanas</option>
+            <option value="1 mes o más">1 mes o más</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <span class="section-num">04</span>
+        <h2 class="section-title">Un último detalle</h2>
+      </div>
+      <div class="field">
+        <label for="origen">¿Cómo conociste mi trabajo? <span class="req">*</span> </label>
+        <select id="origen" name="origen">
+          <option value="">Selecciona una opción</option>
+          <option value="Instagram">Instagram</option>
+          <option value="Recomendación">Recomendación de alguien</option>
+          <option value="Búsqueda en internet">Búsqueda en internet</option>
+          <option value="Otro">Otro</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="mensaje">Algo más que quieras añadir</label>
+        <textarea id="mensaje" name="mensaje" placeholder="Cualquier detalle adicional (opcional)"></textarea>
+      </div>
+    </div>
+
+    <div class="submit-row">
+      <button id="submitBtn" type="submit">Enviar formulario</button>
+      <p id="statusMessage" class="status-message"></p>
+    </div>
+  </form>
+
+  <div class="thankyou" id="thankyou">
+    <div class="thankyou-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 12l4 4L19 6"/></svg>
+    </div>
+    <h2>¡Gracias por contar conmigo!</h2>
+    <p>Tu solicitud ya está recogida. Le echaré un vistazo con calma y te responderé lo antes posible a tu correo.</p>
+  </div>
+
+  <div class="socials">
+    <a href="https://wa.me/34633460426" target="_blank" rel="noopener" aria-label="WhatsApp">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20l1.4-4.2A8 8 0 1112 20a8 8 0 01-4.5-1.4L4 20z"/><path d="M9 9c0 3 3 6 6 6"/></svg>
+    </a>
+    <a href="https://www.instagram.com/ivangomezz.creative/" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+    </a>
+    <a href="https://www.tiktok.com/@ivangomezz.creative?lang=es" target="_blank" rel="noopener" aria-label="TikTok">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M14 3v9.5a3.5 3.5 0 1 1-3.5-3.5"/>
+    <path d="M14 3c1 .9 2.2 1.6 4 1.7"/>
+  </svg>
+</a>
+    
+  </div>
+
+  <p class="footer-tag">@ivangomezz.creative — Sevilla</p>
+</div>
+
+<script>
+document.getElementById('briefForm').addEventListener('submit', async function(e){
+e.preventDefault();
+const f=e.target;
+if(!f.checkValidity()){f.reportValidity();return;}
+const servicios=[...f.querySelectorAll('input[name="servicio"]:checked')].map(x=>x.value);
+const err=document.getElementById('servicioError');
+if(!servicios.length){err.classList.add('show');return;} else err.classList.remove('show');
+const btn=document.getElementById('submitBtn');
+const status=document.getElementById('statusMessage');
+btn.disabled=true;btn.textContent='Enviando solicitud...';btn.classList.add('loading');
+const fd=new FormData();
+fd.append('access_key',f.access_key.value);
+fd.append('subject','Nueva solicitud de proyecto');
+['nombre','negocio','email','whatsapp','instagram','descripcion','referencias','moodboard','presupuesto','plazo','origen','mensaje'].forEach(n=>fd.append(n,f[n].value));
+fd.append('servicios',servicios.join(', '));
+try{
+ const r=await fetch('https://api.web3forms.com/submit',{method:'POST',body:fd});
+ const j=await r.json();
+ if(j.success){f.style.display='none';document.getElementById('thankyou').classList.add('show');}
+ else throw new Error();
+}catch{
+ btn.disabled=false;btn.textContent='Enviar solicitud';btn.classList.remove('loading');
+ status.className='status-message show status-error';
+ status.textContent='Error al enviar. Inténtalo de nuevo.';
+}
+});
+</script>
+
+</body>
+</html>
